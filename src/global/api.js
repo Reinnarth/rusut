@@ -18,7 +18,7 @@ const API_URL = "http://localhost:8080/CourseWorkRusut_war_exploded";
 
 class API {
   axios = axios.create({
-    withCredentials: true,
+    // withCredentials: true,
     validateStatus(status) {
       return status >= 200 && status < 505;
     },
