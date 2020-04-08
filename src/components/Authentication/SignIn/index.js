@@ -57,7 +57,7 @@ export default function SignIn(props) {
   const classes = useStyles();
 
   const onSubmit = (data) => {
-    const sendData = {...data, userType: "Student"}
+    const sendData = {...data, typeUser: "Student"}
     props.signIn(sendData)
   };
 
