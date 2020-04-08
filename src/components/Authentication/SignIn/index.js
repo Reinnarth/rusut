@@ -56,12 +56,9 @@ export default function SignIn(props) {
   });
   const classes = useStyles();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-
   const onSubmit = (data) => {
-    props.signIn(data)
+    const sendData = {...data, userType: "Student"}
+    props.signIn(sendData)
   };
 
   return (

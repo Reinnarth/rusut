@@ -17,7 +17,7 @@ import * as yup from "yup";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import Copyright from "../Copyright"
+import Copyright from "../Copyright";
 
 const signInSchema = yup.object().shape({
   email: yup
@@ -29,8 +29,6 @@ const signInSchema = yup.object().shape({
   middlename: yup.string(),
   password: yup.string().required("Обязательно для заполнения"),
 });
-
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -59,7 +57,8 @@ export default function SignUp(props) {
   const classes = useStyles();
 
   const onSubmit = (data) => {
-    console.log(data);
+    const sendData = {...data, userType: "Student"}
+   props.signUp(sendData)
   };
 
   return (

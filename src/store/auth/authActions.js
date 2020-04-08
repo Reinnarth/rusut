@@ -1,30 +1,26 @@
-import { post } from "../../global/api";
+import API from "../../global/api";
 import { FETCH_LOGIN_SUCCESS, FETCH_REGISTER_SUCCESS } from "./authConstants";
 
 export const signIn = (data) => (dispatch) => {
-  const sendData = {
-    username: data.username,
-    password: data.password,
-    typeUser: "student",
-  };
-  post(sendData, "/signin")
+
+  API.request.post( "/login", data)
     .then((response) => {
       localStorage.setItem("token", response.token);
       window.history.go("/");
       dispatch({
-        type: this.FETCH_LOGIN_SUCCESS,
-        token: response.token,
+        type: FETCH_LOGIN_SUCCESS,
+        token: response.data.token,
       });
     })
     .catch((e) => console.log(e));
 };
 export const signUp = (data) => (dispatch) => {
-  post(data, "/signup")
+  API.request.post("/registration", data)
     .then((response) => {
       localStorage.setItem("token", response.token);
       window.history.go("/");
       dispatch({
-        type: this.FETCH_LOGIN_SUCCESS,
+        type: FETCH_LOGIN_SUCCESS,
         token: response.token,
       });
     })
