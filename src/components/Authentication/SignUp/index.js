@@ -24,6 +24,7 @@ const signInSchema = yup.object().shape({
     .string()
     .email("неверный email")
     .required("Обязательно для заполнения"),
+  login: yup.string().required("Обязательно для заполнения"),
   name: yup.string().required("Обязательно для заполнения"),
   surname: yup.string().required("Обязательно для заполнения"),
   middlename: yup.string(),
@@ -57,8 +58,8 @@ export default function SignUp(props) {
   const classes = useStyles();
 
   const onSubmit = (data) => {
-    const sendData = {...data, typeUser: "Student"}
-   props.signUp(sendData)
+    const sendData = { ...data, typeUser: "Student" };
+    props.signUp(sendData);
   };
 
   return (
@@ -77,13 +78,13 @@ export default function SignUp(props) {
                 margin="normal"
                 inputRef={register}
                 fullWidth
-                id="username"
+                id="login"
                 label="Логин"
-                name="username"
-                autoComplete="username"
+                name="login"
+                autoComplete="login"
                 autoFocus
               />
-              {errors.username && <p>{errors.username.message}</p>}
+              {errors.login && <p>{errors.login.message}</p>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -95,7 +96,7 @@ export default function SignUp(props) {
                 name="email"
                 autoComplete="email"
               />
-              {errors.username && <p>{errors.username.message}</p>}
+              {errors.email && <p>{errors.email.message}</p>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -107,7 +108,7 @@ export default function SignUp(props) {
                 name="surname"
                 autoComplete="lname"
               />
-              {errors.username && <p>{errors.username.message}</p>}
+              {errors.surname && <p>{errors.surname.message}</p>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -120,7 +121,7 @@ export default function SignUp(props) {
                 label="Имя"
                 autoFocus
               />
-              {errors.username && <p>{errors.username.message}</p>}
+              {errors.name && <p>{errors.name.message}</p>}
             </Grid>
 
             <Grid item xs={12}>
@@ -133,7 +134,7 @@ export default function SignUp(props) {
                 name="middlename"
                 autoComplete="middlename"
               />
-              {errors.username && <p>{errors.username.message}</p>}
+              {errors.middlename && <p>{errors.middlename.message}</p>}
             </Grid>
 
             <Grid item xs={12}>
@@ -147,7 +148,7 @@ export default function SignUp(props) {
                 id="password"
                 autoComplete="current-password"
               />
-              {errors.username && <p>{errors.username.message}</p>}
+              {errors.password && <p>{errors.password.message}</p>}
             </Grid>
           </Grid>
           <Button

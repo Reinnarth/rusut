@@ -21,7 +21,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Copyright from "../Copyright"
 
 const signInSchema = yup.object().shape({
-  username: yup.string().required("Обязательно для заполнения"),
+  login: yup.string().required("Обязательно для заполнения"),
   password: yup.string().required("Обязательно для заполнения"),
 });
 
@@ -45,9 +45,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// setLogin = async ({ username, password }) => {
+// setLogin = async ({ login, password }) => {
 //   const { signIn } = this.props;
-//   await signIn(username, password);
+//   await signIn(login, password);
 // };
 
 export default function SignIn(props) {
@@ -76,16 +76,16 @@ export default function SignIn(props) {
             inputRef={register}
             // required
             fullWidth
-            id="username"
+            id="login"
             label="Логин"
-            name="username"
-            autoComplete="username"
+            name="login"
+            autoComplete="login"
             autoFocus
             // onChange={(event) => {
-            //   setUsername(event.target.value);
+            //   setlogin(event.target.value);
             // }}
           />
-          {errors.username && <p>{errors.username.message}</p>}
+          {errors.login && <p>{errors.login.message}</p>}
 
           <TextField
             inputRef={register}
