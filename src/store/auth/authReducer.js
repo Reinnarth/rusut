@@ -1,0 +1,23 @@
+import { FETCH_LOGIN_SUCCESS, FETCH_REGISTER_SUCCESS } from "./authConstants";
+const initialState = {};
+
+export default function authReducer(state = initialState, action) {
+  switch (action.type) {
+    case FETCH_LOGIN_SUCCESS:
+      return {
+        ...state,
+        token: action.token,
+        role: action.role,
+      };
+
+    case FETCH_REGISTER_SUCCESS:
+      return {
+        ...state,
+        token: action.token,
+        role: action.role,
+      };
+
+    default:
+      return state;
+  }
+}
