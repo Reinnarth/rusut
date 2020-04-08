@@ -2,7 +2,12 @@ import { post } from "../../global/api";
 import { FETCH_LOGIN_SUCCESS, FETCH_REGISTER_SUCCESS } from "./authConstants";
 
 export const signIn = (data) => (dispatch) => {
-  return post(data, "/signin")
+  const sendData = {
+    username: data.username,
+    password: data.password,
+    typeUser: "student",
+  };
+  post(sendData, "/signin")
     .then((response) => {
       localStorage.setItem("token", response.token);
       window.history.go("/");
@@ -14,7 +19,7 @@ export const signIn = (data) => (dispatch) => {
     .catch((e) => console.log(e));
 };
 export const signUp = (data) => (dispatch) => {
-  return post(data, "/signup")
+  post(data, "/signup")
     .then((response) => {
       localStorage.setItem("token", response.token);
       window.history.go("/");
