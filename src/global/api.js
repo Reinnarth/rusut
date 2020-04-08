@@ -80,7 +80,7 @@ class API {
   //   const token = await localStorage.getItem("token");
   //   return token;
   // };
-  instance = axios.create({
+  axios = axios.create({
     withCredentials: true,
     validateStatus(status) {
       return status >= 200 && status < 505;
