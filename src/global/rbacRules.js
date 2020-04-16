@@ -1,51 +1,80 @@
 const rules = {
-  student: {
+  ROLE_USER: {
+    static: ["waiting-page:visit"],
+  },
+  ROLE_STUDENT: {
     static: [
-      "posts:list",
-      "posts:create",
       "users:getSelf",
+      "users:editSelf",
       "home-page:visit",
       "semester-page:visit",
       "library-page:visit",
+      "learning-activities-page:visit",
+      "learning-activities:add",
+      "subjects-page:visit",
     ],
     dynamic: {
-      "posts:list": ({ userId, postOwnerId }) => {
+      "learning-activities:edit": ({ userId, postOwnerId }) => {
         if (!userId || !postOwnerId) return false;
         return userId === postOwnerId;
       },
-      "posts:edit": ({ userId, postOwnerId }) => {
+      "learning-activities:delete": ({ userId, postOwnerId }) => {
         if (!userId || !postOwnerId) return false;
         return userId === postOwnerId;
       },
     },
   },
-  teacher: {
+  ROLE_TEACHER: {
     static: [
-      "posts:list",
-      "posts:create",
       "users:getSelf",
+      "users:editSelf",
+      "semester:setMark",
       "home-page:visit",
       "semester-page:visit",
       "library-page:visit",
+      "library:add",
+      "learning-activities-page:visit",
+      "subjects-page:visit",
     ],
     dynamic: {
-      "posts:edit": ({ userId, postOwnerId }) => {
+      "library:edit": ({ userId, postOwnerId }) => {
+        if (!userId || !postOwnerId) return false;
+        return userId === postOwnerId;
+      },
+      "library:delete": ({ userId, postOwnerId }) => {
+        if (!userId || !postOwnerId) return false;
+        return userId === postOwnerId;
+      },
+      "semester:changeMark": ({ userId, postOwnerId }) => {
         if (!userId || !postOwnerId) return false;
         return userId === postOwnerId;
       },
     },
   },
-  admin: {
+  ROLE_ADMIN: {
     static: [
-      "posts:list",
-      "posts:create",
-      "posts:edit",
-      "posts:delete",
+      "users:getSelf",
+      "users:editSelf",
       "users:get",
-      "users:getSelf",
+      "users:edit",
+      "users:delete",
+      "users:changeStudyGroup",
       "home-page:visit",
       "semester-page:visit",
       "library-page:visit",
+      "library:add",
+      "library:edit",
+      "library:delete",
+      "roles:edit",
+      "studygroup:edit",
+      "learning-activities-page:visit",
+      "learning-activities:edit",
+      "learning-activities:delete",
+      "subjects-page:visit",
+      "subjects:add",
+      "subjects:edit",
+      "subjects:delete",
+      "admin-page:visit",
     ],
   },
 };

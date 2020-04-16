@@ -5,7 +5,7 @@ import SignIn from "../../components/Authentication/SignIn";
 import { signIn } from "../../store/auth/authActions";
 
 const mapStateToProps = state => ({
-  token: null
+  token: state.authReducer.token
   //   error: ViewModule.isError(state)
 });
 

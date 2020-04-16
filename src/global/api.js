@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/CourseWorkRusut_war_exploded";
+const API_URL = "http://25.81.236.177:8080/CourseWorkRusut_war_exploded";
 
 // const getToken = async () => {
 //   const token = await localStorage.getItem("token");

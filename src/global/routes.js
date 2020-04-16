@@ -1,10 +1,8 @@
-export const lessons = "/lessons";
-export const badges = "/badges";
-export const courses = "/";
-export const news = "/news";
-export const course = "/course/:id";
-export const lesson = "/lesson/:id";
-export const pages = "/page/:id";
-export const task = "/task/:lessonId/:pageId/:taskId"
 export const signin = "/signin";
 export const signup = "/signup";
+export const home = "/";
+export const semester = "/semester";
+export const library = "/library";
+export const learningActivities = "/learning-activities";
+export const admin = "/admin";
+export const wait = "/wait";
