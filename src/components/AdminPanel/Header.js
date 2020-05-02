@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Avatar from "@material-ui/core/Avatar";
@@ -15,7 +16,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
-import { userTabs, libraryTabs, activitiesTabs } from "./constants";
+import { menuTabs, roles } from "./constants";
+import { setTab } from "../../store/admin/adminActions";
 
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
@@ -43,22 +45,25 @@ const styles = (theme) => ({
 
 function Header(props) {
   const { classes, onDrawerToggle } = props;
+  const dispatch = useDispatch();
+  let history = useHistory();
   const location = useSelector((state) => state.adminReducer.location);
 
-  let tabs = [];
+  let tabs = menuTabs.find((el) => el.path === history.location.pathname);
 
-  if (location.path === "users") {
-    tabs = userTabs;
-  } else if (location.path === "library") {
-    tabs = libraryTabs;
-  } else if (location.path === "learning-activities") {
-    tabs = activitiesTabs;
-  }
- console.log(tabs)
-  const [tab, setActiveTab] = useState(tabs[0] ? tabs[0].name : "");
+  const [tab, setActiveTab] = useState(tabs.tabs[0] ? tabs.tabs[0].name : "");
 
-  const handleChange = (event, activeTab) => {
+  useEffect(() => {
+    setActiveTab(
+      menuTabs.find((el) => el.path === history.location.pathname).tabs[0].name
+    );
+  }, [history.location.pathname]);
+
+  const handleTabChange = async (event, activeTab) => {
     setActiveTab(activeTab);
+    dispatch(setTab(activeTab));
+    await props.getUserAmount({ nameRole: activeTab });
+    await props.getContentArray(`/admin/${activeTab}`, { offset: 0 });
   };
 
   return (
@@ -118,8 +123,8 @@ function Header(props) {
         position="static"
         elevation={0}
       >
-        <Tabs value={tab} textColor="inherit" onChange={handleChange}>
-          {tabs.map((tab, index) => (
+        <Tabs value={tab} textColor="inherit" onChange={handleTabChange}>
+          {tabs.tabs.map((tab, index) => (
             <Tab
               key={index}
               value={tab.name}

@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import SingleSwitch from "../SingleContent/SingleSwitch";
+import SingleContentContainer from "../../../containers/AdminContainer/SingleContentContainer"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UsersList(props) {
   const classes = useStyles();
-  const users = useSelector((state) => state.adminReducer.users);
+  const users = useSelector((state) => state.adminReducer.content);
   return (
     <div>
       {users.map((user, index) => {
@@ -29,20 +31,23 @@ export default function UsersList(props) {
             <Grid item xs={12}>
               <Paper className={classes.paper} elevation={1} square>
                 <Grid container>
-                  <Grid item xs={4}>
+                  <Grid item xs={3}>
                     <Typography color="inherit" component="h1">
                       {user.surname}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={3}>
                     <Typography color="inherit" component="h1">
                       {user.name}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={3}>
                     <Typography color="inherit" component="p">
-                      Роль: {user.role}{" "}
+                      Роль: {user.nameRole}
                     </Typography>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <SingleContentContainer userId={user.userId} />
                   </Grid>
                 </Grid>
               </Paper>

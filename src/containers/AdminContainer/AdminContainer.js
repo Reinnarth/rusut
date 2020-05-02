@@ -2,18 +2,20 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import AdminPanel from "../../components/AdminPanel/AdminPanel";
-import { getUsers, getUserAmount } from "../../store/admin/adminActions";
+import { getContentArray, getUserAmount } from "../../store/admin/adminActions";
 
 const mapStateToProps = (state) => ({
   amount: state.adminReducer.amount,
-  users: state.adminReducer.users,
-  location: state.adminReducer.location
+  content: state.adminReducer.content,
+  location: state.adminReducer.location,
+  error: state.viewReducer.error,
+  loading: state.viewReducer.loading
   //   error: ViewModule.isError(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUserAmount: () => dispatch(getUserAmount()),
-  getUsers: (params) => dispatch(getUsers(params)),
+  getUserAmount: (params) => dispatch(getUserAmount(params)),
+  getContentArray: (path, params) => dispatch(getContentArray(path, params)),
 });
 
 export default withRouter(

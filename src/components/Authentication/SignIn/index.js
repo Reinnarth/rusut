@@ -18,7 +18,7 @@ import * as yup from "yup";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import Copyright from "../../Shared/Copyright/Copyright"
+import Copyright from "../../Shared/Copyright/Copyright";
 
 const signInSchema = yup.object().shape({
   login: yup.string().required("Обязательно для заполнения"),
@@ -57,8 +57,7 @@ export default function SignIn(props) {
   const classes = useStyles();
 
   const onSubmit = (data) => {
-    const sendData = {...data, typeUser: "User"}
-    props.signIn(sendData)
+    props.signIn(data);
   };
 
   return (

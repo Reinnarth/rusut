@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Pagination from "@material-ui/lab/Pagination";
@@ -17,7 +17,9 @@ export default function PaginationControlled(props) {
   const handleChange = async (event, value) => {
     setPage(value);
 
-    props.getUsers({ offset: (value - 1) * 25 });
+    props.getContentArray(`admin/${props.tab}`, {
+      offset: (value - 1) * 25,
+    });
   };
 
   return (

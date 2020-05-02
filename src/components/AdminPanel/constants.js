@@ -1,24 +1,29 @@
-export const userTabs = [
+export const menuTabs = [
   {
-    label: "Users",
-    name: "users",
+    path: "/admin/users",
+    tabs: [
+      {
+        label: "Users",
+        name: "users",
+      },
+      {
+        label: "Students",
+        name: "students",
+      },
+      {
+        label: "Student groups",
+        name: "groups",
+      },
+      {
+        label: "Teachers",
+        name: "teachers",
+      },
+    ],
   },
   {
-    label: "Students",
-    name: "students",
-  },
-  {
-    label: "Student groups",
-    name: "groups",
-  },
-  {
-    label: "Teachers",
-    name: "teachers",
-  },
-];
-
-export const libraryTabs = [
-    {
+    path: "/admin/library",
+    tabs: [
+      {
         label: "Books",
         name: "books",
       },
@@ -30,10 +35,12 @@ export const libraryTabs = [
         label: "Subject",
         name: "subject",
       },
-
-];
-export const activitiesTabs = [
-    {
+    ],
+  },
+  {
+    path: "/admin/learning-activities",
+    tabs: [
+      {
         label: "Articles",
         name: "articles",
       },
@@ -45,5 +52,25 @@ export const activitiesTabs = [
         label: "Practice",
         name: "practice",
       },
+    ],
+  },
+];
 
+export const roles = [
+  {
+    nameRole: "ROLE_USER",
+    tab: "users",
+  },
+  {
+    nameRole: "ROLE_STUDENT",
+    tab: "students",
+  },
+  {
+    nameRole: "ROLE_TEACHER",
+    tab: "teachers",
+  },
+  {
+    nameRole: "ROLE_ADMIN",
+    tab: "admins",
+  },
 ];

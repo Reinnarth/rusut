@@ -8,6 +8,7 @@ import {
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Hidden from "@material-ui/core/Hidden";
 
+import Error from "../Error";
 import Navigator from "./Navigator";
 import Content from "./Content";
 import Header from "./Header";
@@ -153,7 +154,7 @@ const styles = {
 };
 
 function AdminPanel(props) {
-  const { classes } = props;
+  const { classes, error, loading } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -161,41 +162,47 @@ function AdminPanel(props) {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <nav className={classes.drawer}>
-          <Hidden smUp implementation="js">
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant="temporary"
-              location={props.location}
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Navigator
-              location={props.location}
-              PaperProps={{ style: { width: drawerWidth } }}
-            />
-          </Hidden>
-        </nav>
-        <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
-          <main className={classes.main}>
-            <Content
-              getUserAmount={props.getUserAmount}
-              getUsers={props.getUsers}
-              amount={props.amount}
-            />
-          </main>
-          <footer className={classes.footer}>
-            <Copyright />
-          </footer>
-        </div>
-      </div>
-    </ThemeProvider>
+    <>
+      {error && <Error />}
+      {!error && (
+        <ThemeProvider theme={theme}>
+          <div className={classes.root}>
+            <CssBaseline />
+            <nav className={classes.drawer}>
+              <Hidden smUp implementation="js">
+                <Navigator
+                  PaperProps={{ style: { width: drawerWidth } }}
+                  variant="temporary"
+                  open={mobileOpen}
+                  onClose={handleDrawerToggle}
+                />
+              </Hidden>
+              <Hidden xsDown implementation="css">
+                <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+              </Hidden>
+            </nav>
+            <div className={classes.app}>
+              <Header
+                onDrawerToggle={handleDrawerToggle}
+                getUserAmount={props.getUserAmount}
+                getContentArray={props.getContentArray}
+              />
+              <main className={classes.main}>
+                <Content
+                  loading={loading}
+                  getUserAmount={props.getUserAmount}
+                  getContentArray={props.getContentArray}
+                  amount={props.amount}
+                />
+              </main>
+              <footer className={classes.footer}>
+                <Copyright />
+              </footer>
+            </div>
+          </div>
+        </ThemeProvider>
+      )}
+    </>
   );
 }
 

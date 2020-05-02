@@ -58,8 +58,7 @@ export default function SignUp(props) {
   const classes = useStyles();
 
   const onSubmit = (data) => {
-    const sendData = { ...data, typeUser: "User" };
-    props.signUp(sendData);
+    props.signUp(data);
   };
 
   return (

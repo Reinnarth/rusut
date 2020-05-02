@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -15,7 +16,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
 import PaginationControlled from "../Shared/Pagination/Pagination";
-import UsersList from "./ContentLists/UsersList"
+import { ContentSwitch } from "./ContentLists/ContentSwitch";
 
 const styles = (theme) => ({
   paper: {
@@ -37,6 +38,7 @@ const styles = (theme) => ({
   },
   contentWrapper: {
     margin: "40px 16px",
+    textAlign: "center",
   },
   paginationWrapper: {
     display: "flex",
@@ -46,14 +48,15 @@ const styles = (theme) => ({
 });
 
 function Content(props) {
-  const { classes } = props;
+  const { classes, loading } = props;
   const [params, setParams] = useState({});
-  const dispatch = useDispatch();
+  let history = useHistory();
+  const tab = useSelector((state) => state.adminReducer.tab);
 
   useEffect(() => {
     const fetchData = async () => {
-      props.getUserAmount();
-      props.getUsers({ offset: 0 });
+      await props.getUserAmount({ nameRole: tab });
+      await props.getContentArray(history.location.pathname, { offset: 0 });
     };
     fetchData();
   }, []);
@@ -92,7 +95,7 @@ function Content(props) {
               <Tooltip title="Reload">
                 <IconButton
                   onClick={() => {
-                    props.getUsers();
+                    props.getContentArray(`admin/${tab}`, { offset: 0 });
                   }}
                 >
                   <RefreshIcon className={classes.block} color="inherit" />
@@ -103,16 +106,16 @@ function Content(props) {
         </Toolbar>
       </AppBar>
       <div className={classes.contentWrapper}>
-                  <UsersList></UsersList>
-        {/* <Typography color="textSecondary" align="center">
-          No users for this project yet
-        </Typography> */}
+        {/* {loading && <CircularProgress />} */}
+        {/* {!loading && <></>} */}
+        <ContentSwitch />
       </div>
       <div className={classes.paginationWrapper}>
         <PaginationControlled
+          tab={tab}
           params={params}
           setParams={setParams}
-          getUsers={props.getUsers}
+          getContentArray={props.getContentArray}
           pagecount={Math.ceil(props.amount / 25)}
         />
       </div>

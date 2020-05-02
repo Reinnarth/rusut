@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import SingleSwitch from "../SingleContent/SingleSwitch";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UsersList(props) {
+export default function ActivitiesList(props) {
   const classes = useStyles();
   const activities = useSelector((state) => state.adminReducer.activities);
   return (
@@ -38,6 +39,9 @@ export default function UsersList(props) {
                     <Typography color="inherit" component="h1">
                       {activity.author}
                     </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <SingleSwitch />
                   </Grid>
                 </Grid>
               </Paper>

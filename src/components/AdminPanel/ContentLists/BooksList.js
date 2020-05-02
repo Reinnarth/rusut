@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import SingleSwitch from "../SingleContent/SingleSwitch";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UsersList(props) {
+export default function BooksList(props) {
   const classes = useStyles();
-  const books = useSelector((state) => state.adminReducer.books);
+  const books = useSelector((state) => state.adminReducer.content);
   return (
     <div>
       {books.map((book) => {
@@ -38,6 +39,9 @@ export default function UsersList(props) {
                     <Typography color="inherit" component="h1">
                       {book.author}
                     </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <SingleSwitch />
                   </Grid>
                 </Grid>
               </Paper>

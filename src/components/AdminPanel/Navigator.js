@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -15,31 +15,19 @@ import PeopleIcon from "@material-ui/icons/People";
 import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
 import PermMediaOutlinedIcon from "@material-ui/icons/PhotoSizeSelectActual";
 
-import TimerIcon from "@material-ui/icons/Timer";
-import SettingsIcon from "@material-ui/icons/Settings";
-import PhonelinkSetupIcon from "@material-ui/icons/PhonelinkSetup";
-
 import { setLocation } from "../../store/admin/adminActions";
 
 const categories = [
   {
     id: "Categories",
     children: [
-      { id: "Users", location: "users", icon: <PeopleIcon /> },
-      { id: "Library", location: "library", icon: <LocalLibraryIcon /> },
+      { id: "Users", location: "/admin/users", icon: <PeopleIcon /> },
+      { id: "Library", location: "/admin/library", icon: <LocalLibraryIcon /> },
       {
         id: "Learning Activities",
-        location: "learning-activities",
+        location: "/admin/learning-activities",
         icon: <PermMediaOutlinedIcon />,
       },
-    ],
-  },
-  {
-    id: "Quality",
-    children: [
-      { id: "Analytics", icon: <SettingsIcon /> },
-      { id: "Performance", icon: <TimerIcon /> },
-      { id: "Test Lab", icon: <PhonelinkSetupIcon /> },
     ],
   },
 ];
@@ -92,7 +80,7 @@ function Navigator(props) {
   const handleClick = (loc, name) => {
     const location = { path: loc, name };
     dispatch(setLocation(location));
-    history.push(`/admin/${loc}`);
+    history.push(`${loc}`);
   };
   const { classes, ...other } = props;
 
@@ -133,7 +121,7 @@ function Navigator(props) {
               </ListItemText>
             </ListItem>
             {children.map(({ id: childId, location, icon }) => {
-              const active = location === props.location.path;
+              const active = location === history.location.pathname;
               return (
                 <ListItem
                   key={childId}
