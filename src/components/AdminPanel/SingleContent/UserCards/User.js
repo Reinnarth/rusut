@@ -8,7 +8,7 @@ import {
   Select,
 } from "@material-ui/core";
 
-export default function User({ user, editFlag, classifiers, handleChange }) {
+export default function User({ newUser, editFlag, classifiers, handleChange }) {
   if (editFlag) {
     return (
       <div>
@@ -16,7 +16,7 @@ export default function User({ user, editFlag, classifiers, handleChange }) {
           <FormControl>
             <InputLabel>Фамилия</InputLabel>
             <Input
-              value={user.surname}
+              value={newUser.surname}
               onChange={handleChange}
               name="surname"
             />
@@ -25,14 +25,14 @@ export default function User({ user, editFlag, classifiers, handleChange }) {
         <Grid item xs={10}>
           <FormControl>
             <InputLabel>Имя</InputLabel>
-            <Input value={user.name} name="name" onChange={handleChange} />
+            <Input value={newUser.name} name="name" onChange={handleChange} />
           </FormControl>
         </Grid>
         <Grid item xs={10}>
           <FormControl>
             <InputLabel>Отчество</InputLabel>
             <Input
-              value={user.middlename}
+              value={newUser.middlename}
               name="middlename"
               onChange={handleChange}
             />
@@ -41,20 +41,20 @@ export default function User({ user, editFlag, classifiers, handleChange }) {
         <Grid item xs={10}>
           <FormControl>
             <InputLabel>Логин</InputLabel>
-            <Input value={user.login} name="login" onChange={handleChange} />
+            <Input value={newUser.login} name="login" onChange={handleChange} />
           </FormControl>
         </Grid>
         <Grid item xs={10}>
           <FormControl>
             <InputLabel>Email</InputLabel>
-            <Input value={user.email} name="email" onChange={handleChange} />
+            <Input value={newUser.email} name="email" onChange={handleChange} />
           </FormControl>
         </Grid>
         <Grid item xs={10}>
           <FormControl>
             <InputLabel>Роль</InputLabel>
             <Select
-              value={user.nameRole}
+              value={newUser.nameRole}
               onChange={handleChange}
               inputProps={{
                 name: "nameRole",
@@ -74,11 +74,11 @@ export default function User({ user, editFlag, classifiers, handleChange }) {
     return (
       <>
         <Typography>
-          {user.surname} {user.name} {user.middlename}
+          {newUser.surname} {newUser.name} {newUser.middlename}
         </Typography>
-        <Typography>Логин: {user.login}</Typography>
-        <Typography>Роль: {user.nameRole}</Typography>
-        <Typography>Email: {user.email}</Typography>
+        <Typography>Логин: {newUser.login}</Typography>
+        <Typography>Роль: {newUser.nameRole}</Typography>
+        <Typography>Email: {newUser.email}</Typography>
       </>
     );
   }

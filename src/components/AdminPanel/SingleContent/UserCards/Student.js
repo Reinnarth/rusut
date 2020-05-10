@@ -7,7 +7,13 @@ import {
   Select,
 } from "@material-ui/core";
 
-export default function Student({ user, editFlag, classifiers, handleChange }) {
+export default function Student({
+  user,
+  newUser,
+  editFlag,
+  classifiers,
+  handleChange,
+}) {
   if (editFlag) {
     return (
       <>
@@ -16,8 +22,8 @@ export default function Student({ user, editFlag, classifiers, handleChange }) {
             <InputLabel>Специальность</InputLabel>
             <Select
               value={
-                user.nameSpecialty
-                  ? user.nameSpecialty
+                newUser.nameSpecialty
+                  ? newUser.nameSpecialty
                   : classifiers.specialty[0]
               }
               onChange={handleChange}
@@ -36,43 +42,45 @@ export default function Student({ user, editFlag, classifiers, handleChange }) {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={10}>
-          <FormControl>
-            <InputLabel>Группа</InputLabel>
-            <Select
-              value={
-                user.numberGroup
-                  ? user.numberGroup
-                  : classifiers.specialty.find(
-                      (el) => el.nameSpecialty === user.nameSpecialty
-                    ).numberGroup[0]
-              }
-              onChange={handleChange}
-              inputProps={{
-                name: "numberGroup",
-                id: "age-native-helper",
-              }}
-            >
-              {classifiers.specialty
-                .find((el) => el.nameSpecialty === user.nameSpecialty)
-                .numberGroup.map((el, index) => {
-                  return (
-                    <option key={index} value={el}>
-                      {el}
-                    </option>
-                  );
-                })}
-            </Select>
-          </FormControl>
-        </Grid>
+        {user.nameRole === "ROLE_STUDENT" && (
+          <Grid item xs={10}>
+            <FormControl>
+              <InputLabel>Группа</InputLabel>
+              <Select
+                value={
+                  newUser.numberGroup
+                    ? newUser.numberGroup
+                    : classifiers.specialty.find(
+                        (el) => el.nameSpecialty === newUser.nameSpecialty
+                      ).numberGroup[0]
+                }
+                onChange={handleChange}
+                inputProps={{
+                  name: "numberGroup",
+                  id: "age-native-helper",
+                }}
+              >
+                {classifiers.specialty
+                  .find((el) => el.nameSpecialty === newUser.nameSpecialty)
+                  .numberGroup.map((el, index) => {
+                    return (
+                      <option key={index} value={el}>
+                        {el}
+                      </option>
+                    );
+                  })}
+              </Select>
+            </FormControl>
+          </Grid>
+        )}
       </>
     );
   } else {
     return (
       <>
-        <Typography>Специальность: {user.nameSpecialty}</Typography>
-        <Typography>Группа {user.numberGroup}</Typography>
-        <Typography>Номер зачетной книжки: {user.numberBook}</Typography>
+        <Typography>Специальность: {newUser.nameSpecialty}</Typography>
+        <Typography>Группа {newUser.numberGroup}</Typography>
+        <Typography>Номер зачетной книжки: {newUser.numberBook}</Typography>
       </>
     );
   }

@@ -6,7 +6,6 @@ import {
   FormControl,
   InputLabel,
   Typography,
-  
   Button,
   Paper,
 } from "@material-ui/core";
@@ -24,8 +23,6 @@ import StgForm from "./StgAux/StgForm";
 const styles = (theme) => ({
   container: {
     marginTop: theme.spacing(8),
-    marginRight: theme.spacing(8),
-    marginLeft: theme.spacing(8),
   },
   paper: {
     maxWidth: "80%",
@@ -63,7 +60,7 @@ function StgPage(props) {
     dispatch(addStg(stg, user.userId));
   };
 
-  const deleteSTG = (stg) => {
+  const deleteSTG = (stg, event) => {
     dispatch(deleteStg(stg, user.userId));
   };
 
@@ -85,13 +82,13 @@ function StgPage(props) {
           <Grid className={classes.container} item xs={6}>
             <Paper className={classes.paper} square>
               {user.stg.map((el, index) => (
-                <Paper square>
+                <Paper key={index} square>
                   <Typography>{el.subject}</Typography>
                   <Typography>{el.subject}</Typography>
                   <Button
                     color="secondary"
                     variant="outlined"
-                    onClick={(el) => deleteSTG(el)}
+                    onClick={(event) => deleteSTG(el, event)}
                   >
                     delet this
                   </Button>

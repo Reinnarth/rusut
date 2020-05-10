@@ -1,36 +1,37 @@
 import {
-  FETCH_STG_SUCCESS,
-  ADD_STG_SUCCESS,
-  DELETE_STG_SUCCESS,
-  FETCH_CLASSIFIERS_SUCCESS,
+  FETCH_EXAMS_SUCCESS,
+  FETCH_STUDENTS_SUCCESS,
+  ADD_EXAM_SUCCESS,
+  UPDATE_EXAM_SUCCESS,
 } from "./stgConstants";
 
 const initialState = {
-  stg: [],
-  classifiers: [],
+  students: [],
+  exams: [],
+  exam: {}
 };
 
 export default function examReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_CLASSIFIERS_SUCCESS:
+    case FETCH_EXAMS_SUCCESS:
       return {
         ...state,
-        classifiers: action.payload,
+        exams: action.payload,
       };
 
-    case FETCH_STG_SUCCESS:
+    case FETCH_STUDENTS_SUCCESS:
       return {
         ...state,
-        stg: action.payload,
+        students: action.payload,
       };
 
-    case ADD_STG_SUCCESS:
+    case ADD_EXAM_SUCCESS:
       return {
         ...state,
         oneContent: action.payload,
       };
 
-    case DELETE_STG_SUCCESS:
+    case UPDATE_EXAM_SUCCESS:
       return {
         ...state,
       };

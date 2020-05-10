@@ -31,6 +31,47 @@ function CenteredTabs(props) {
     <Paper className={classes.root}>
       <Can
         role={user.nameRole}
+        perform="home-page:visit"
+        yes={() => (
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab value={routes.semester} label="Семестр" />
+            <Tab value={routes.library} label="Библиотека" />
+            <Tab
+              value={routes.learningActivities}
+              label="Learning activities"
+            />
+            <Can
+              role={user.nameRole}
+              perform="admin-page:visit"
+              yes={(props) => (
+                <Tab
+                  {...props}
+                  value={`${routes.admin}/users`}
+                  label="Admin Panel"
+                />
+              )}
+              no={() => <></>}
+            />
+            <Can
+              role={user.nameRole}
+              perform="stg-page:visit"
+              yes={(props) => (
+                <Tab {...props} value={routes.stg} label="Группы" />
+              )}
+              no={() => <></>}
+            />
+          </Tabs>
+        )}
+        no={() => <></>}
+      />
+      {/* <Can
+        role={user.nameRole}
         perform="admin-page:visit"
         yes={() => (
           <Tabs
@@ -71,23 +112,8 @@ function CenteredTabs(props) {
             <Tab value={routes.stg} label="Группы" />
           </Tabs>
         )}
-        no={() => (
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-          >
-            <Tab value={routes.semester} label="Семестр" />
-            <Tab value={routes.library} label="Библиотека" />
-            <Tab
-              value={routes.learningActivities}
-              label="Learning activities"
-            />
-          </Tabs>
-        )}
-      />
+        no={() => <></>}
+      /> */}
     </Paper>
   );
 }

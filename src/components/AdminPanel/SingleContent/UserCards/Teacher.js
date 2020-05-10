@@ -9,15 +9,7 @@ import {
 } from "@material-ui/core";
 
 export default function Teacher(props) {
-  const {
-    user,
-    editFlag,
-    classifiers,
-    handleChange,
-    addSTG,
-    updateSTG,
-    deleteSTG,
-  } = props;
+  const { newUser, editFlag, classifiers, handleChange } = props;
 
   if (editFlag) {
     return (
@@ -28,8 +20,8 @@ export default function Teacher(props) {
             <Select
               multiple
               value={
-                user.namePositions
-                  ? user.namePositions
+                newUser.namePositions
+                  ? newUser.namePositions
                   : classifiers.positions[0]
               }
               onChange={handleChange}
@@ -54,8 +46,8 @@ export default function Teacher(props) {
             <Select
               multiple
               value={
-                user.nameScienceDegrees
-                  ? user.nameScienceDegrees
+                newUser.nameScienceDegrees
+                  ? newUser.nameScienceDegrees
                   : classifiers.scienceDegrees[0]
               }
               onChange={handleChange}
@@ -74,7 +66,6 @@ export default function Teacher(props) {
             </Select>
           </FormControl>
         </Grid>
-
       </>
     );
   } else {
@@ -82,14 +73,14 @@ export default function Teacher(props) {
       <>
         <Typography>
           Должности:
-          {user.namePositions.map((el, index) => (
+          {newUser.namePositions.map((el, index) => (
             <>{` ${el}`}</>
           ))}
         </Typography>
 
         <Typography>
           Научная степень:
-          {user.nameScienceDegrees.map((el, index) => (
+          {newUser.nameScienceDegrees.map((el, index) => (
             <>{` ${el}`}</>
           ))}
         </Typography>

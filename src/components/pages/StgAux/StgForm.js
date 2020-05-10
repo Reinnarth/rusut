@@ -54,35 +54,56 @@ const MenuProps = {
   },
 };
 
+const initialState = {
+  subject: "",
+  specialty: "",
+  groups: [],
+  active: true,
+  semesters: [],
+};
+
 class StgForm extends Component {
   constructor(props) {
     super();
-    this.state = {
-      subject: null,
-      specialty: null,
-      groups: [],
-      active: true,
-    };
+    this.state = initialState;
   }
 
   addSTG = () => {
     const { user, postSTG } = this.props;
-    const { subject, groups } = this.state;
-    const newStg = lodash.concat(user.stg, { subject, groups });
+    const { subject, groups, semesters } = this.state;
+    console.log(user.stg, { subject, groups, semesters });
+    const newStg = lodash.concat(user.stg, {
+      subject: subject,
+      groups: groups,
+      semesters: semesters,
+    });
+    console.log(newStg);
     postSTG(newStg);
+    this.setState(initialState);
   };
 
   handleChange = (event) => {
     if (event.target.name === "specialty") {
-      this.setState({ groups: [] });
+      this.setState({ groups: [], semesters: [] });
     }
     this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
-    const { subject, specialty, groups } = this.state;
+    const { subject, specialty, groups, semesters } = this.state;
     const { classifiers, classes } = this.props;
-    console.log(groups);
+    let ceiling = 0;
+    let semesterNumbers = [];
+    if (specialty) {
+      ceiling = classifiers.specialty.find(
+        (el) => el.nameSpecialty === specialty
+      ).amount;
+
+      for (let i = 1; i <= ceiling; i++) {
+        semesterNumbers.push(i);
+      }
+    }
+
     return (
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
@@ -106,6 +127,7 @@ class StgForm extends Component {
               </Select>
             </FormControl>
           </Grid>
+
           {subject && (
             <>
               <Grid item xs={10}>
@@ -129,34 +151,58 @@ class StgForm extends Component {
                 </FormControl>
               </Grid>
               {specialty && (
-                <Grid item xs={10}>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel>Группы</InputLabel>
+                <>
+                  <Grid item xs={5}>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel>Группы</InputLabel>
 
-                    <Select
-                      labelId="demo-mutiple-chip-label"
-                      id="demo-mutiple-chip"
-                      multiple
-                      inputProps={{
-                        name: "groups",
-                      }}
-                      value={groups}
-                      onChange={this.handleChange}
-                      input={<Input id="select-multiple-chip" />}
-                      renderValue={(selected) => selected.join(", ")}
-                      MenuProps={MenuProps}
-                    >
-                      {classifiers.specialty
-                        .find((el) => el.nameSpecialty === specialty)
-                        .numberGroup.map((el, index) => (
+                      <Select
+                        multiple
+                        inputProps={{
+                          name: "groups",
+                        }}
+                        value={groups}
+                        onChange={this.handleChange}
+                        input={<Input id="select-multiple-chip" />}
+                        renderValue={(selected) => selected.join(", ")}
+                        MenuProps={MenuProps}
+                      >
+                        {classifiers.specialty
+                          .find((el) => el.nameSpecialty === specialty)
+                          .numberGroup.map((el, index) => (
+                            <MenuItem key={index} value={el}>
+                              <Checkbox checked={groups.indexOf(el) > -1} />
+                              <ListItemText primary={el} />
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel>Семестры</InputLabel>
+                      <Select
+                        value={semesters}
+                        onChange={this.handleChange}
+                        multiple
+                        input={<Input id="select-multiple-sems" />}
+                        renderValue={(selected) => selected.join(", ")}
+                        MenuProps={MenuProps}
+                        inputProps={{
+                          name: "semesters",
+                        }}
+                      >
+                        {semesterNumbers.map((el, index) => (
                           <MenuItem key={index} value={el}>
-                            <Checkbox checked={groups.indexOf(el) > -1} />
+                            <Checkbox checked={semesters.indexOf(el) > -1} />
                             <ListItemText primary={el} />
                           </MenuItem>
                         ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </>
               )}
             </>
           )}

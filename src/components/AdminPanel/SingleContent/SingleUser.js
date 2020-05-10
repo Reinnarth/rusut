@@ -12,7 +12,7 @@ export default class SingleUser extends Component {
     super();
 
     this.state = {
-      user: props.user ? props.user : {},
+      newUser: props.user ? props.user : {},
       classifiers: props.classifiers ? props.classifiers : [],
       editFlag: false,
     };
@@ -25,9 +25,9 @@ export default class SingleUser extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.user.userId !== state.user.userId) {
+    if (props.user.userId !== state.newUser.userId) {
       return {
-        user: props.user,
+        newUser: props.user,
         classifiers: props.classifiers,
       };
     }
@@ -37,7 +37,7 @@ export default class SingleUser extends Component {
   componentWillUnmount() {
     this.setState = {
       editFlag: false,
-      user: {},
+      newUser: {},
     };
   }
 
@@ -47,16 +47,16 @@ export default class SingleUser extends Component {
       case "nameRole":
         if (event.target.value === "ROLE_STUDENT") {
           this.setState({
-            user: {
-              ...this.state.user,
+            newUser: {
+              ...this.state.newUser,
               [event.target.name]: event.target.value,
               nameSpecialty: classifiers.specialty[0].nameSpecialty,
             },
           });
         } else if (event.target.value === "ROLE_TEACHER") {
           this.setState({
-            user: {
-              ...this.state.user,
+            newUser: {
+              ...this.state.newUser,
               [event.target.name]: event.target.value,
               namePositions: [],
               nameScienceDegrees: [],
@@ -67,8 +67,8 @@ export default class SingleUser extends Component {
         break;
       default:
         this.setState({
-          user: {
-            ...this.state.user,
+          newUser: {
+            ...this.state.newUser,
             [event.target.name]: event.target.value,
           },
         });
@@ -78,23 +78,21 @@ export default class SingleUser extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { user } = this.state;
+    const { newUser } = this.state;
     const {
       updateUser,
       getContentArray,
-      getOneContent,
       tab,
-      location,
     } = this.props;
 
-    await updateUser(user);
-    // await getOneContent(user.userId, location.path);
+    await updateUser(newUser);
+
     await getContentArray(`/admin/${tab}`, { offset: 0 });
   };
 
   render() {
-    const { user, editFlag, classifiers } = this.state;
-    const { deleteOneContent, location } = this.props;
+    const { newUser, editFlag, classifiers } = this.state;
+    const { deleteOneContent, location, user } = this.props;
 
     if (editFlag) {
       return (
@@ -107,23 +105,24 @@ export default class SingleUser extends Component {
             spacing={1}
           >
             <User
-              user={user}
+              newUser={newUser}
               classifiers={classifiers}
               editFlag={editFlag}
               handleChange={this.handleChange}
             />
 
-            {user.nameRole === "ROLE_STUDENT" && (
+            {newUser.nameRole === "ROLE_STUDENT" && (
               <Student
                 user={user}
+                newUser={newUser}
                 classifiers={classifiers}
                 editFlag={editFlag}
                 handleChange={this.handleChange}
               />
             )}
-            {user.nameRole === "ROLE_TEACHER" && (
+            {newUser.nameRole === "ROLE_TEACHER" && (
               <Teacher
-                user={user}
+                newUser={newUser}
                 classifiers={classifiers}
                 editFlag={editFlag}
                 handleChange={this.handleChange}
@@ -134,9 +133,7 @@ export default class SingleUser extends Component {
                 deleteSTG={(index) => this.deleteSTG(index)}
               />
             )}
-            {user.nameRole === "ROLE_ADMIN" && <>admin</>}
-            {/* <Typography>{user.studyGroup.numberGroup}</Typography> */}
-            {/* <Typography>{user.specialty.nameSpecialty}</Typography> */}
+            {newUser.nameRole === "ROLE_ADMIN" && <>admin</>}
 
             <Grid container direction="row">
               <Grid item>
@@ -157,31 +154,30 @@ export default class SingleUser extends Component {
       return (
         <Grid>
           <User
-            user={user}
+            newUser={newUser}
             classifiers={classifiers}
             editFlag={editFlag}
             handleChange={this.handleChange}
           />
 
-          {user.nameRole === "ROLE_STUDENT" && (
+          {newUser.nameRole === "ROLE_STUDENT" && (
             <Student
-              user={user}
+              newUser={newUser}
               classifiers={classifiers}
               editFlag={editFlag}
               handleChange={this.handleChange}
             />
           )}
-          {user.nameRole === "ROLE_TEACHER" && (
+          {newUser.nameRole === "ROLE_TEACHER" && (
             <Teacher
-              user={user}
+              newUser={newUser}
               classifiers={classifiers}
               editFlag={editFlag}
               handleChange={this.handleChange}
             />
           )}
-          {user.nameRole === "ROLE_ADMIN" && <>admin</>}
-          {/* <Typography>{user.studyGroup.numberGroup}</Typography> */}
-          {/* <Typography>{user.specialty.nameSpecialty}</Typography> */}
+          {newUser.nameRole === "ROLE_ADMIN" && <>admin</>}
+
           <Button
             type="button"
             variant="outlined"
@@ -194,7 +190,7 @@ export default class SingleUser extends Component {
             type="button"
             variant="outlined"
             color="secondary"
-            onClick={() => deleteOneContent(user.userId, `${location.path}`)}
+            onClick={() => deleteOneContent(newUser.userId, `${location.path}`)}
           >
             Удалить
           </Button>

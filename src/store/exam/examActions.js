@@ -1,17 +1,17 @@
 import API from "../../global/api";
 import {
   FETCH_EXAMS_SUCCESS,
+  FETCH_STUDENTS_SUCCESS,
   ADD_EXAM_SUCCESS,
   UPDATE_EXAM_SUCCESS,
-  FETCH_CLASSIFIERS_SUCCESS,
 } from "./stgConstants";
 
 import { setLoading, setError } from "../view/viewActions";
 
-export const getExams = (id, path) => (dispatch) => {
+export const getExams = (id) => (dispatch) => {
   dispatch(setLoading(true));
   API.axios
-    .get(`${path}/}`)
+    .get(`/teacher/exams/${id}`)
     .then((response) => {
       dispatch({
         type: FETCH_EXAMS_SUCCESS,
@@ -50,16 +50,16 @@ export const updateExam = (data, id) => (dispatch) => {
     .catch((error) => dispatch(setError(true)));
 };
 
-export const getClassifiers = () => (dispatch) => {
+export const getStudents = (group) => (dispatch) => {
   dispatch(setLoading(true));
   API.axios
-    .get("/teacher/classifiers")
+    .get(`/teacher/students/${group}`)
     .then((response) => {
       dispatch({
-        type: FETCH_CLASSIFIERS_SUCCESS,
+        type: UPDATE_EXAM_SUCCESS,
         payload: response.data,
       });
     })
     .then(() => dispatch(setLoading(false)))
     .catch((error) => dispatch(setError(true)));
-};
+}
