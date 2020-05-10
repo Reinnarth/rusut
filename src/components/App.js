@@ -6,8 +6,10 @@ import SignUpContainer from "../containers/AuthContainers/SignUpContainer";
 import SemesterPage from "./pages/SemesterPage";
 import LibraryPage from "./pages/LibraryPage";
 import LearningActivitiesPage from "./pages/LearningActivitiesPage";
-import MenuAppBar from "./Menu/AppMenu";
+import StgPage from "./pages/StgPage";
+
 import AdminContainer from "../containers/AdminContainer/AdminContainer";
+import MenuContainer from "../containers/MenuContainer/MenuContainer.js";
 import * as route from "../global/routes";
 
 export default class App extends Component {
@@ -17,7 +19,7 @@ export default class App extends Component {
       exact: true,
       page: () => (
         <>
-          <MenuAppBar /> <SemesterPage />
+          <MenuContainer /> <SemesterPage />
         </>
       ),
     },
@@ -26,7 +28,7 @@ export default class App extends Component {
       exact: true,
       page: () => (
         <>
-          <MenuAppBar /> <LibraryPage />
+          <MenuContainer /> <LibraryPage />
         </>
       ),
     },
@@ -35,7 +37,7 @@ export default class App extends Component {
       exact: true,
       page: () => (
         <>
-          <MenuAppBar /> <LearningActivitiesPage />
+          <MenuContainer /> <LearningActivitiesPage />
         </>
       ),
     },
@@ -44,6 +46,14 @@ export default class App extends Component {
       page: () => (
         <>
           <AdminContainer />
+        </>
+      ),
+    },
+    {
+      path: route.stg,
+      page: () => (
+        <>
+          <MenuContainer /> <StgPage />
         </>
       ),
     },
@@ -62,6 +72,11 @@ export default class App extends Component {
       return (
         <div>
           <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => <Redirect to={"/semester"} />}
+            />
             <Route
               path="/signin"
               render={() => <Redirect to={"/semester"} />}

@@ -8,12 +8,13 @@ import {
   CHANGE_LOCATION_SUCCESS,
   CHANGE_TAB_SUCCESS,
   FETCH_CLASSIFIERS_SUCCESS,
+  UPLOAD_FILE_SUCCESS,
+  DOWNLOAD_FILE_SUCCESS,
 } from "./adminConstants";
 
 import { setLoading, setError } from "../view/viewActions";
 
 export const getUserAmount = (params) => (dispatch) => {
-  console.log(params)
   dispatch(setLoading(true));
   API.axios
     .get("/admin/counterUsers", { params: params })
@@ -27,10 +28,10 @@ export const getUserAmount = (params) => (dispatch) => {
     .catch((error) => dispatch(setError(true)));
 };
 
-export const getUser = (id) => (dispatch) => {
+export const getOneContent = (id, path) => (dispatch) => {
   dispatch(setLoading(true));
   API.axios
-    .get(`/admin/user/${id}`)
+    .get(`${path}/${id}`)
     .then((response) => {
       dispatch({
         type: FETCH_USER_SUCCESS,
@@ -69,13 +70,13 @@ export const updateUser = (data) => (dispatch) => {
     .catch((error) => dispatch(setError(true)));
 };
 
-export const deleteUser = (id) => (dispatch) => {
+export const deleteOneContent = (id, path) => (dispatch) => {
   dispatch(setLoading(true));
   API.axios
-    .delete(`/admin/users/updateUser`)
+    .delete(`${path}/delete/${id}`)
     .then((response) => {
       dispatch({
-        type: CHANGE_USER_SUCCESS,
+        type: DELETE_USER_SUCCESS,
         payload: response.data,
       });
     })
@@ -97,29 +98,39 @@ export const getContentArray = (path, params) => (dispatch) => {
     .catch((error) => dispatch(setError(true)));
 };
 
-export const getTeachers = (params) => (dispatch) => {
+export const uploadFile = (file) => (dispatch) => {
   dispatch(setLoading(true));
+
   API.axios
-    .get("/admin/teachers", { params: params })
+    .post(`/admin/library`, file, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
     .then((response) => {
-      dispatch({
-        type: FETCH_USERS_SUCCESS,
-        payload: response.data,
-      });
+      dispatch({ type: UPLOAD_FILE_SUCCESS, payload: response.data });
     })
     .then(() => dispatch(setLoading(false)))
     .catch((error) => dispatch(setError(true)));
 };
 
-export const getStudents = (params) => (dispatch) => {
+export const downloadFile = (id) => (dispatch) => {
   dispatch(setLoading(true));
+
   API.axios
-    .get("/admin/students", { params: params })
+    .get(`/admin/library/${id}`, {
+      headers: { "Content-Type": "appplication/pdf" },
+      responseType: "blob",
+    })
     .then((response) => {
-      dispatch({
-        type: FETCH_USERS_SUCCESS,
-        payload: response.data,
-      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      console.log(response);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute(
+        "download",
+        response.headers["content-disposition"].split("filename=")[1]
+      );
+      link.click();
+      window.URL.revokeObjectURL(url);
     })
     .then(() => dispatch(setLoading(false)))
     .catch((error) => dispatch(setError(true)));

@@ -5,4 +5,5 @@ export const semester = "/semester";
 export const library = "/library";
 export const learningActivities = "/learning-activities";
 export const admin = "/admin";
+export const stg = "/stg";
 export const wait = "/wait";

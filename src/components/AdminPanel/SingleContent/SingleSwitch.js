@@ -1,5 +1,5 @@
 import React from "react";
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Modal from "@material-ui/core/Modal";
@@ -8,7 +8,7 @@ import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
 
 import SingleUser from "./SingleUser";
-import { getUser } from "../../../store/admin/adminActions";
+import SingleBook from "./SingleBook";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -31,8 +31,7 @@ export default function SingleSwitch(props) {
 
   const handleOpen = () => {
     setOpen(true);
-    props.getUser(props.userId);
-    props.getClassifiers();
+    props.getOneContent(props.userId, history.location.pathname);
   };
 
   const handleClose = () => {
@@ -47,18 +46,31 @@ export default function SingleSwitch(props) {
             {props.loading && <CircularProgress />}
             {!props.loading && (
               <SingleUser
+                location={props.location}
                 key={props.userId}
-                user={props.user}
+                user={props.oneContent}
                 tab={props.tab}
                 classifiers={props.classifiers}
                 updateUser={props.updateUser}
                 getContentArray={props.getContentArray}
+                getOneContent={props.getOneContent}
+                deleteOneContent={props.deleteOneContent}
               />
             )}
           </>
         );
-      //   case "/admin/library":
-      //     return <BooksList />;
+      case "/admin/library":
+        return (
+          <SingleBook
+            key={props.userId}
+            book={props.oneContent}
+            tab={props.tab}
+            classifiers={props.classifiers}
+            updateUser={props.updateUser}
+            getContentArray={props.getContentArray}
+            downloadFile={props.downloadFile}
+          />
+        );
       //   case "/admin/learning-activities":
       //     return <ActivitiesList />;
       default:
@@ -74,7 +86,7 @@ export default function SingleSwitch(props) {
         color="primary"
         onClick={handleOpen}
       >
-        Open
+        Открыть
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"

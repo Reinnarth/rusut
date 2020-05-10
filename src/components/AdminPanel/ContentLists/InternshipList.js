@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -19,13 +19,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ActivitiesList(props) {
+export default function InternshipList(props) {
   const classes = useStyles();
-  const activities = useSelector((state) => state.adminReducer.activities);
-  console.log(activities)
+  const internships = useSelector((state) => state.adminReducer.content);
   return (
     <div>
-      {activities.map((activity) => {
+      {internships.map((internship) => {
         return (
           <Grid container>
             <Grid item xs={12}>
@@ -33,12 +32,12 @@ export default function ActivitiesList(props) {
                 <Grid container>
                   <Grid item xs={4}>
                     <Typography color="inherit" component="h1">
-                      {activity.name}
+                      {internship.name}
                     </Typography>
                   </Grid>
                   <Grid item xs={4}>
                     <Typography color="inherit" component="h1">
-                      {activity.author}
+                      {internship.author}
                     </Typography>
                   </Grid>
                   <Grid item xs={4}>

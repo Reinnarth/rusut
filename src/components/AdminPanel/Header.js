@@ -59,10 +59,13 @@ function Header(props) {
     );
   }, [history.location.pathname]);
 
+  useEffect(() => {
+    dispatch(setTab(tab));
+  }, [tab]);
+
   const handleTabChange = async (event, activeTab) => {
     setActiveTab(activeTab);
     dispatch(setTab(activeTab));
-    await props.getUserAmount({ nameRole: activeTab });
     await props.getContentArray(`/admin/${activeTab}`, { offset: 0 });
   };
 

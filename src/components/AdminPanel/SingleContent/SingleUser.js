@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 
 import * as yup from "yup";
-import {
-  Button,
-  Grid,
-  Input,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  NativeSelect,
-} from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
+
+import User from "./UserCards/User";
+import Student from "./UserCards/Student";
+import Teacher from "./UserCards/Teacher";
 
 export default class SingleUser extends Component {
   constructor(props) {
@@ -49,13 +45,25 @@ export default class SingleUser extends Component {
     const { classifiers } = this.state;
     switch (event.target.name) {
       case "nameRole":
-        this.setState({
-          user: {
-            ...this.state.user,
-            [event.target.name]: event.target.value,
-            nameSpecialty: classifiers.specialty[0].nameSpecialty,
-          },
-        });
+        if (event.target.value === "ROLE_STUDENT") {
+          this.setState({
+            user: {
+              ...this.state.user,
+              [event.target.name]: event.target.value,
+              nameSpecialty: classifiers.specialty[0].nameSpecialty,
+            },
+          });
+        } else if (event.target.value === "ROLE_TEACHER") {
+          this.setState({
+            user: {
+              ...this.state.user,
+              [event.target.name]: event.target.value,
+              namePositions: [],
+              nameScienceDegrees: [],
+            },
+          });
+        }
+
         break;
       default:
         this.setState({
@@ -71,14 +79,22 @@ export default class SingleUser extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const { user } = this.state;
-    const { tab, updateUser, getContentArray } = this.props;
+    const {
+      updateUser,
+      getContentArray,
+      getOneContent,
+      tab,
+      location,
+    } = this.props;
 
     await updateUser(user);
-    await getContentArray(`admin/${tab}`, { offset: 0 });
+    // await getOneContent(user.userId, location.path);
+    await getContentArray(`/admin/${tab}`, { offset: 0 });
   };
 
   render() {
     const { user, editFlag, classifiers } = this.state;
+    const { deleteOneContent, location } = this.props;
 
     if (editFlag) {
       return (
@@ -90,128 +106,37 @@ export default class SingleUser extends Component {
             alignItems="center"
             spacing={1}
           >
-            <Grid item xs={10}>
-              <FormControl>
-                <InputLabel>Фамилия</InputLabel>
-                <Input
-                  value={user.surname}
-                  onChange={this.handleChange}
-                  name="surname"
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={10}>
-              <FormControl>
-                <InputLabel>Имя</InputLabel>
-                <Input
-                  value={user.name}
-                  name="name"
-                  onChange={this.handleChange}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={10}>
-              <FormControl>
-                <InputLabel>Отчество</InputLabel>
-                <Input
-                  value={user.middlename}
-                  name="middlename"
-                  onChange={this.handleChange}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={10}>
-              <FormControl>
-                <InputLabel>Логин</InputLabel>
-                <Input
-                  value={user.login}
-                  name="login"
-                  onChange={this.handleChange}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={10}>
-              <FormControl>
-                <InputLabel>Email</InputLabel>
-                <Input
-                  value={user.email}
-                  name="email"
-                  onChange={this.handleChange}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={10}>
-              <FormControl>
-                <InputLabel>Роль</InputLabel>
-                <NativeSelect
-                  value={user.nameRole}
-                  onChange={this.handleChange}
-                  inputProps={{
-                    name: "nameRole",
-                  }}
-                >
-                  {classifiers.role.map((el, index) => (
-                    <option key={index} value={el}>
-                      {el}
-                    </option>
-                  ))}
-                </NativeSelect>
-              </FormControl>
-            </Grid>
-            {user.nameRole === "ROLE_USER" && <></>}
+            <User
+              user={user}
+              classifiers={classifiers}
+              editFlag={editFlag}
+              handleChange={this.handleChange}
+            />
+
             {user.nameRole === "ROLE_STUDENT" && (
-              <>
-                <Grid item xs={10}>
-                  <FormControl>
-                    <InputLabel>Специальность</InputLabel>
-                    <NativeSelect
-                      value={
-                        user.nameSpecialty
-                          ? user.nameSpecialty
-                          : classifiers.specialty[0]
-                      }
-                      onChange={this.handleChange}
-                      inputProps={{
-                        name: "nameSpecialty",
-                        id: "age-native-helper",
-                      }}
-                    >
-                      {classifiers.specialty.map((el, index) => {
-                        return (
-                          <option key={index} value={el.nameSpecialty}>
-                            {el.nameSpecialty}
-                          </option>
-                        );
-                      })}
-                    </NativeSelect>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={10}>
-                  <FormControl>
-                    <InputLabel>Группа</InputLabel>
-                    <Input
-                      value={user.numberGroup}
-                      name="numberGroup"
-                      onChange={this.handleChange}
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={10}>
-                  <FormControl>
-                    <InputLabel>Номер зачетной книжки</InputLabel>
-                    <Input
-                      value={user.numberBook}
-                      name="numberBook"
-                      onChange={this.handleChange}
-                    />
-                  </FormControl>
-                </Grid>
-              </>
+              <Student
+                user={user}
+                classifiers={classifiers}
+                editFlag={editFlag}
+                handleChange={this.handleChange}
+              />
             )}
-            {user.nameRole === "ROLE_TEACHER" && <>teacher</>}
+            {user.nameRole === "ROLE_TEACHER" && (
+              <Teacher
+                user={user}
+                classifiers={classifiers}
+                editFlag={editFlag}
+                handleChange={this.handleChange}
+                addSTG={this.addSTG}
+                updateSTG={(subject, groups, index) =>
+                  this.updateSTG(subject, groups, index)
+                }
+                deleteSTG={(index) => this.deleteSTG(index)}
+              />
+            )}
             {user.nameRole === "ROLE_ADMIN" && <>admin</>}
-            {/* <p>{user.studyGroup.numberGroup}</p> */}
-            {/* <p>{user.specialty.nameSpecialty}</p> */}
+            {/* <Typography>{user.studyGroup.numberGroup}</Typography> */}
+            {/* <Typography>{user.specialty.nameSpecialty}</Typography> */}
 
             <Grid container direction="row">
               <Grid item>
@@ -231,31 +156,47 @@ export default class SingleUser extends Component {
     } else {
       return (
         <Grid>
-          <p>{user.surname}</p>
-          <p>{user.name}</p>
-          <p>{user.middlename}</p>
-          <p>Логин: {user.login}</p>
-          <p>Роль: {user.nameRole}</p>
-          <p>Email:{user.email}</p>
-          {user.nameRole === "ROLE_USER" && <></>}
+          <User
+            user={user}
+            classifiers={classifiers}
+            editFlag={editFlag}
+            handleChange={this.handleChange}
+          />
+
           {user.nameRole === "ROLE_STUDENT" && (
-            <>
-              <p>Специальность: {user.nameSpecialty}</p>
-              <p>Группа {user.numberGroup}</p>
-              <p>Номер зачетной книжки: {user.numberBook}</p>
-            </>
+            <Student
+              user={user}
+              classifiers={classifiers}
+              editFlag={editFlag}
+              handleChange={this.handleChange}
+            />
           )}
-          {user.nameRole === "ROLE_TEACHER" && <>teacher</>}
+          {user.nameRole === "ROLE_TEACHER" && (
+            <Teacher
+              user={user}
+              classifiers={classifiers}
+              editFlag={editFlag}
+              handleChange={this.handleChange}
+            />
+          )}
           {user.nameRole === "ROLE_ADMIN" && <>admin</>}
-          {/* <p>{user.studyGroup.numberGroup}</p> */}
-          {/* <p>{user.specialty.nameSpecialty}</p> */}
+          {/* <Typography>{user.studyGroup.numberGroup}</Typography> */}
+          {/* <Typography>{user.specialty.nameSpecialty}</Typography> */}
           <Button
             type="button"
             variant="outlined"
             color="primary"
             onClick={() => this.setState({ editFlag: true })}
           >
-            change
+            Изменить
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            color="secondary"
+            onClick={() => deleteOneContent(user.userId, `${location.path}`)}
+          >
+            Удалить
           </Button>
         </Grid>
       );

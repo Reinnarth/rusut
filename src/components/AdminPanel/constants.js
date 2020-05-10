@@ -3,20 +3,20 @@ export const menuTabs = [
     path: "/admin/users",
     tabs: [
       {
-        label: "Users",
+        label: "Нераспределенные",
         name: "users",
       },
       {
-        label: "Students",
+        label: "Студенты",
         name: "students",
       },
       {
-        label: "Student groups",
-        name: "groups",
+        label: "Преподаватели",
+        name: "teachers",
       },
       {
-        label: "Teachers",
-        name: "teachers",
+        label: "Администраторы",
+        name: "admins",
       },
     ],
   },
@@ -24,8 +24,8 @@ export const menuTabs = [
     path: "/admin/library",
     tabs: [
       {
-        label: "Books",
-        name: "books",
+        label: "Книги",
+        name: "library",
       },
       {
         label: "Authors",
@@ -41,18 +41,18 @@ export const menuTabs = [
     path: "/admin/learning-activities",
     tabs: [
       {
-        label: "Articles",
+        label: "Статьи",
         name: "articles",
       },
       {
-        label: "Courseworks",
+        label: "Курсовые",
         name: "courseworks",
       },
-      {
-        label: "Practice",
-        name: "practice",
-      },
     ],
+  },
+  {
+    path: "/admin/internships",
+    tabs: [{ label: "Практики", name: "internships" }],
   },
 ];
 

@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import indigo from "@material-ui/core/colors/indigo";
-import green from "@material-ui/core/colors/green";
+import red from "@material-ui/core/colors/red";
 
 import store from "./store";
 
@@ -14,7 +14,7 @@ const theme = createMuiTheme({
   fontFamily: 'Roboto',
   palette: {
     primary: indigo,
-    secondary: green,
+    secondary: red,
   },
   status: {
     danger: "orange",

@@ -1,7 +1,6 @@
-import { FETCH_USER_SUCCESS, FETCH_USER_AMOUNT_SUCCESS } from "./userConstants";
+import { FETCH_USER_SUCCESS } from "./userConstants";
 const initialState = {
-  amount: null,
-  users: []
+  user: {},
 };
 
 export default function userReducer(state = initialState, action) {
@@ -9,8 +8,8 @@ export default function userReducer(state = initialState, action) {
     case FETCH_USER_SUCCESS:
       return {
         ...state,
-        amount: action.amount,
-        };
+        user: action.payload,
+      };
 
     default:
       return state;

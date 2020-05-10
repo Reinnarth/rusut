@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 function CenteredTabs(props) {
   const classes = useStyles();
+  const user = useSelector((state) => state.userReducer.user);
   const [value, setValue] = React.useState(props.location.pathname);
 
   const handleChange = (event, newValue) => {
@@ -28,7 +30,7 @@ function CenteredTabs(props) {
   return (
     <Paper className={classes.root}>
       <Can
-        role={"ROLE_ADMIN"}
+        role={user.nameRole}
         perform="admin-page:visit"
         yes={() => (
           <Tabs
@@ -38,13 +40,35 @@ function CenteredTabs(props) {
             textColor="primary"
             centered
           >
-            <Tab value={routes.semester} label="Semester" />
-            <Tab value={routes.library} label="Library" />
+            <Tab value={routes.semester} label="Семестр" />
+            <Tab value={routes.library} label="Библиотека" />
             <Tab
               value={routes.learningActivities}
               label="Learning activities"
             />
             <Tab value={`${routes.admin}/users`} label="Admin Panel" />
+          </Tabs>
+        )}
+        no={() => <></>}
+      />
+      <Can
+        role={user.nameRole}
+        perform="stg-page:visit"
+        yes={() => (
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab value={routes.semester} label="Семестр" />
+            <Tab value={routes.library} label="Библиотека" />
+            <Tab
+              value={routes.learningActivities}
+              label="Learning activities"
+            />
+            <Tab value={routes.stg} label="Группы" />
           </Tabs>
         )}
         no={() => (
@@ -55,8 +79,8 @@ function CenteredTabs(props) {
             textColor="primary"
             centered
           >
-            <Tab value={routes.semester} label="Semester" />
-            <Tab value={routes.library} label="Library" />
+            <Tab value={routes.semester} label="Семестр" />
+            <Tab value={routes.library} label="Библиотека" />
             <Tab
               value={routes.learningActivities}
               label="Learning activities"

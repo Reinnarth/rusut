@@ -7,6 +7,7 @@ export const signIn = (data) => (dispatch) => {
     .then((response) => {
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("login", response.data.login);
         window.history.go("/semester");
         dispatch({
           type: FETCH_LOGIN_SUCCESS,
@@ -23,10 +24,9 @@ export const signUp = (data) => (dispatch) => {
     .post("/registration", data)
     .then((response) => {
       if (response.data.token) {
-        console.log(response)
-        console.log(window.history)
-        localStorage.setItem("token", response.data.token);
         window.history.go("/semester");
+        localStorage.setItem("token", response.data.token);
+
         dispatch({
           type: FETCH_REGISTER_SUCCESS,
           token: response.data.token,

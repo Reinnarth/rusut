@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import clsx from "clsx";
@@ -11,22 +11,32 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
+import AssignmentIcon from "@material-ui/icons/Assignment";
 import PeopleIcon from "@material-ui/icons/People";
 import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
-import PermMediaOutlinedIcon from "@material-ui/icons/PhotoSizeSelectActual";
 
-import { setLocation } from "../../store/admin/adminActions";
+import { setLocation, setTab } from "../../store/admin/adminActions";
 
 const categories = [
   {
     id: "Categories",
     children: [
-      { id: "Users", location: "/admin/users", icon: <PeopleIcon /> },
-      { id: "Library", location: "/admin/library", icon: <LocalLibraryIcon /> },
+      { id: "Пользователи", location: "/admin/users", icon: <PeopleIcon /> },
       {
-        id: "Learning Activities",
+        id: "Библиотека",
+        location: "/admin/library",
+        icon: <LocalLibraryIcon />,
+      },
+      {
+        id: "Учебная деятельность",
         location: "/admin/learning-activities",
-        icon: <PermMediaOutlinedIcon />,
+        icon: <MenuBookIcon />,
+      },
+      {
+        id: "Практики",
+        location: "/admin/internships",
+        icon: <AssignmentIcon />,
       },
     ],
   },
@@ -75,13 +85,16 @@ const styles = (theme) => ({
 
 function Navigator(props) {
   let history = useHistory();
+
   const dispatch = useDispatch();
 
   const handleClick = (loc, name) => {
     const location = { path: loc, name };
     dispatch(setLocation(location));
+    // dispatch(setTab(loc.substring(7)))
     history.push(`${loc}`);
   };
+
   const { classes, ...other } = props;
 
   return (
@@ -106,7 +119,7 @@ function Navigator(props) {
               primary: classes.itemPrimary,
             }}
           >
-            Back to main site
+            Вернуться на сайт
           </ListItemText>
         </ListItem>
         {categories.map(({ id, children }) => (

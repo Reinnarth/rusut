@@ -3,11 +3,16 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
+import NativeSelect from "@material-ui/core/NativeSelect";
 import Toolbar from "@material-ui/core/Toolbar";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Input from "@material-ui/core/Input";
 import TextField from "@material-ui/core/TextField";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
@@ -16,6 +21,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
 import PaginationControlled from "../Shared/Pagination/Pagination";
+import UploadFileForm from "../Shared/UploadFileForm/UploadFileForm";
 import { ContentSwitch } from "./ContentLists/ContentSwitch";
 
 const styles = (theme) => ({
@@ -49,17 +55,36 @@ const styles = (theme) => ({
 
 function Content(props) {
   const { classes, loading } = props;
-  const [params, setParams] = useState({});
+  const [params, setParams] = useState({ offset: 0 });
+  const [open, setOpen] = useState(false);
+
   let history = useHistory();
   const tab = useSelector((state) => state.adminReducer.tab);
+  const classifiers = useSelector((state) => state.adminReducer.classifiers);
 
   useEffect(() => {
     const fetchData = async () => {
-      await props.getUserAmount({ nameRole: tab });
-      await props.getContentArray(history.location.pathname, { offset: 0 });
+      await props.getContentArray(history.location.pathname, params);
+      await props.getClassifiers();
     };
     fetchData();
-  }, []);
+  }, [history.location.pathname]);
+
+  const handleChange = (event) => {
+    if (event.target.value === "") {
+      let newParams = params;
+      delete newParams[event.target.name];
+      setParams(newParams);
+    } else {
+      setParams({ ...params, [event.target.name]: event.target.value });
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  console.log(params);
 
   return (
     <Paper className={classes.paper} square>
@@ -77,22 +102,70 @@ function Content(props) {
             <Grid item xs>
               <TextField
                 fullWidth
-                placeholder="Search by group number or name"
+                placeholder="Search by name"
+                onChange={handleChange}
                 InputProps={{
+                  name: "search",
                   disableUnderline: true,
                   className: classes.searchInput,
                 }}
               />
             </Grid>
+            {tab === "library" && (
+              <Grid item xs>
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => setOpen(true)}
+                >
+                  Добавить
+                </Button>
+              </Grid>
+            )}
+            <Grid item xs>
+              {tab === "teachers" && (
+                <NativeSelect
+                  value={params.position}
+                  onChange={handleChange}
+                  inputProps={{
+                    name: "namePosition",
+                  }}
+                >
+                  {classifiers.positions.map((el, index) => (
+                    <option key={index} value={el}>
+                      {el}
+                    </option>
+                  ))}
+                </NativeSelect>
+              )}
+            </Grid>
             <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.addUser}
-              >
-                Add user
-              </Button>
-              <Tooltip title="Reload">
+              {tab === "students" && (
+                <NativeSelect
+                  value={params.specialty}
+                  onChange={handleChange}
+                  inputProps={{
+                    name: "specialty",
+                  }}
+                >
+                  <option value=""></option>
+                  {classifiers.specialty.map((el, index) => (
+                    <option key={index} value={el.nameSpecialty}>
+                      {el.nameSpecialty}
+                    </option>
+                  ))}
+                </NativeSelect>
+              )}
+              <Tooltip title="Найти">
+                <IconButton
+                  onClick={() => {
+                    props.getContentArray(`admin/${tab}`, params);
+                  }}
+                >
+                  <SearchIcon className={classes.block} color="inherit" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Обновить">
                 <IconButton
                   onClick={() => {
                     props.getContentArray(`admin/${tab}`, { offset: 0 });
@@ -107,7 +180,24 @@ function Content(props) {
       </AppBar>
       <div className={classes.contentWrapper}>
         {/* {loading && <CircularProgress />} */}
+
         {/* {!loading && <></>} */}
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <UploadFileForm setOpen={setOpen}></UploadFileForm>
+          </Fade>
+        </Modal>
         <ContentSwitch />
       </div>
       <div className={classes.paginationWrapper}>

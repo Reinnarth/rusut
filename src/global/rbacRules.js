@@ -30,6 +30,7 @@ const rules = {
       "users:editSelf",
       "semester:setMark",
       "home-page:visit",
+      "stg-page:visit",
       "semester-page:visit",
       "library-page:visit",
       "library:add",

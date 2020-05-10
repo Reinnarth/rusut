@@ -18,6 +18,7 @@ export default function PaginationControlled(props) {
     setPage(value);
 
     props.getContentArray(`admin/${props.tab}`, {
+      ...props.params,
       offset: (value - 1) * 25,
     });
   };
