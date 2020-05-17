@@ -172,7 +172,6 @@ function AdminPanel(props) {
               <Hidden smUp implementation="js">
                 <Navigator
                   PaperProps={{ style: { width: drawerWidth } }}
-             
                   getContentArray={props.getContentArray}
                   variant="temporary"
                   open={mobileOpen}
@@ -182,7 +181,6 @@ function AdminPanel(props) {
               <Hidden xsDown implementation="css">
                 <Navigator
                   PaperProps={{ style: { width: drawerWidth } }}
-                
                   getContentArray={props.getContentArray}
                 />
               </Hidden>
@@ -190,7 +188,6 @@ function AdminPanel(props) {
             <div className={classes.app}>
               <Header
                 onDrawerToggle={handleDrawerToggle}
-               
                 getContentArray={props.getContentArray}
               />
               <main className={classes.main}>
@@ -200,6 +197,7 @@ function AdminPanel(props) {
                   loading={loading}
                   uploadFile={props.uploadFile}
                   getContentArray={props.getContentArray}
+                  addPlace={props.addPlace}
                   amount={props.amount}
                 />
               </main>

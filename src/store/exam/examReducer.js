@@ -1,14 +1,17 @@
 import {
   FETCH_EXAMS_SUCCESS,
   FETCH_STUDENTS_SUCCESS,
+  FETCH_EXAM_SUCCESS,
   ADD_EXAM_SUCCESS,
   UPDATE_EXAM_SUCCESS,
-} from "./stgConstants";
+  SET_SESSION_LOADING,
+} from "./examConstants";
 
 const initialState = {
   students: [],
   exams: [],
-  exam: {}
+  exam: {},
+  sessionLoading: true,
 };
 
 export default function examReducer(state = initialState, action) {
@@ -17,6 +20,11 @@ export default function examReducer(state = initialState, action) {
       return {
         ...state,
         exams: action.payload,
+      };
+    case FETCH_EXAM_SUCCESS:
+      return {
+        ...state,
+        exam: action.payload,
       };
 
     case FETCH_STUDENTS_SUCCESS:
@@ -28,12 +36,18 @@ export default function examReducer(state = initialState, action) {
     case ADD_EXAM_SUCCESS:
       return {
         ...state,
-        oneContent: action.payload,
+        exam: action.payload,
       };
 
     case UPDATE_EXAM_SUCCESS:
       return {
         ...state,
+      };
+
+    case SET_SESSION_LOADING:
+      return {
+        ...state,
+        sessionLoading: action.payload,
       };
 
     default:

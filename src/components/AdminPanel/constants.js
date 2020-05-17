@@ -44,15 +44,15 @@ export const menuTabs = [
         label: "Статьи",
         name: "articles",
       },
-      {
-        label: "Курсовые",
-        name: "courseworks",
-      },
     ],
   },
   {
     path: "/admin/internships",
     tabs: [{ label: "Практики", name: "internships" }],
+  },
+  {
+    path: "/admin/place_practice",
+    tabs: [{ label: "Места практик", name: "place_practice" }],
   },
 ];
 

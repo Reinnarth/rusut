@@ -4,6 +4,7 @@ import UsersList from "./UsersList";
 import BooksList from "./BooksList";
 import ActivitiesList from "./ActivitiesList";
 import InternshipList from "./InternshipList";
+import PracticePlaces from "./PracticePlaces";
 
 export const ContentSwitch = () => {
   let history = useHistory();
@@ -17,6 +18,8 @@ export const ContentSwitch = () => {
       return <ActivitiesList />;
     case "/admin/internships":
       return <InternshipList />;
+    case "/admin/place_practice":
+      return <PracticePlaces />;
     default:
       return <div>Nothing found</div>;
   }

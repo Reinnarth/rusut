@@ -79,15 +79,10 @@ export default class SingleUser extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const { newUser } = this.state;
-    const {
-      updateUser,
-      getContentArray,
-      tab,
-    } = this.props;
+    const { updateContent, tab, handleClose } = this.props;
 
-    await updateUser(newUser);
-
-    await getContentArray(`/admin/${tab}`, { offset: 0 });
+    await updateContent(`/admin/${tab}`, newUser);
+    handleClose()
   };
 
   render() {

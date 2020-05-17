@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 
 import SingleUser from "./SingleUser";
 import SingleBook from "./SingleBook";
+import SinglePracticePlace from "./SinglePracticePlace";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -31,7 +32,7 @@ export default function SingleSwitch(props) {
 
   const handleOpen = () => {
     setOpen(true);
-    props.getOneContent(props.userId, history.location.pathname);
+    props.getOneContent(props.id, history.location.pathname);
   };
 
   const handleClose = () => {
@@ -47,11 +48,12 @@ export default function SingleSwitch(props) {
             {!props.loading && (
               <SingleUser
                 location={props.location}
-                key={props.userId}
+                key={props.id}
                 user={props.oneContent}
                 tab={props.tab}
                 classifiers={props.classifiers}
-                updateUser={props.updateUser}
+                updateContent={props.updateContent}
+                handleClose={handleClose}
                 getContentArray={props.getContentArray}
                 getOneContent={props.getOneContent}
                 deleteOneContent={props.deleteOneContent}
@@ -62,12 +64,25 @@ export default function SingleSwitch(props) {
       case "/admin/library":
         return (
           <SingleBook
-            key={props.userId}
+            key={props.id}
             book={props.oneContent}
             tab={props.tab}
             classifiers={props.classifiers}
-            updateUser={props.updateUser}
+            updateContent={props.updateContent}
             getContentArray={props.getContentArray}
+            downloadFile={props.downloadFile}
+          />
+        );
+      case "/admin/place_practice":
+        return (
+          <SinglePracticePlace
+            key={props.id}
+            place={props.oneContent}
+            tab={props.tab}
+            classifiers={props.classifiers}
+            updateContent={props.updateContent}
+            getContentArray={props.getContentArray}
+            handleClose={handleClose}
             downloadFile={props.downloadFile}
           />
         );

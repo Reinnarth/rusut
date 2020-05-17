@@ -9,6 +9,7 @@ import {
   FETCH_CLASSIFIERS_SUCCESS,
   UPLOAD_FILE_SUCCESS,
   DOWNLOAD_FILE_SUCCESS,
+  ADD_PLACE_PRACTICE,
 } from "./adminConstants";
 
 const initialState = {
@@ -65,6 +66,10 @@ export default function adminReducer(state = initialState, action) {
 
     case DOWNLOAD_FILE_SUCCESS:
       return { ...state };
+
+    case ADD_PLACE_PRACTICE:
+      return state;
+
     default:
       return state;
   }

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ActivitiesList(props) {
   const classes = useStyles();
   const activities = useSelector((state) => state.adminReducer.activities);
-  console.log(activities)
+
   return (
     <div>
       {activities.map((activity) => {

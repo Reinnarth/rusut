@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -7,7 +8,10 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import SingleSwitch from "../SingleContent/SingleSwitch";
 
-import { downloadFile } from "../../../store/admin/adminActions";
+import {
+  downloadFile,
+  deleteOneContent,
+} from "../../../store/admin/adminActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BooksList(props) {
   const classes = useStyles();
+  const history = useHistory();
   const books = useSelector((state) => state.adminReducer.content);
   const dispatch = useDispatch();
 
@@ -41,7 +46,7 @@ export default function BooksList(props) {
                     </Typography>
                   </Grid>
 
-                  <Grid item xs={6}>
+                  <Grid item xs={3}>
                     {/* <SingleSwitch /> */}
 
                     <Button
@@ -50,7 +55,27 @@ export default function BooksList(props) {
                       color="primary"
                       onClick={() => dispatch(downloadFile(book.libraryId))}
                     >
-                      Загрузить
+                      Скачать
+                    </Button>
+                  </Grid>
+
+                  <Grid item xs={3}>
+                    {/* <SingleSwitch /> */}
+
+                    <Button
+                      type="button"
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() =>
+                        dispatch(
+                          deleteOneContent(
+                            book.libraryId,
+                            history.location.pathname
+                          )
+                        )
+                      }
+                    >
+                      Удалить
                     </Button>
                   </Grid>
                 </Grid>

@@ -10,6 +10,7 @@ import {
   FETCH_CLASSIFIERS_SUCCESS,
   UPLOAD_FILE_SUCCESS,
   DOWNLOAD_FILE_SUCCESS,
+  ADD_PLACE_PRACTICE,
 } from "./adminConstants";
 
 import { setLoading, setError } from "../view/viewActions";
@@ -56,11 +57,12 @@ export const getClassifiers = () => (dispatch) => {
     .catch((error) => dispatch(setError(true)));
 };
 
-export const updateUser = (data) => (dispatch) => {
+export const updateContent = (path, data) => (dispatch) => {
   dispatch(setLoading(true));
   API.axios
-    .put(`/admin/users/updateUser`, data)
+    .put(`${path}`, data)
     .then((response) => {
+      dispatch(getContentArray(path, { offset: 0 }));
       dispatch({
         type: CHANGE_USER_SUCCESS,
         payload: response.data,
@@ -73,13 +75,14 @@ export const updateUser = (data) => (dispatch) => {
 export const deleteOneContent = (id, path) => (dispatch) => {
   dispatch(setLoading(true));
   API.axios
-    .delete(`${path}/delete/${id}`)
+    .delete(`${path}/${id}`)
     .then((response) => {
       dispatch({
         type: DELETE_USER_SUCCESS,
         payload: response.data,
       });
     })
+    .then(() => dispatch(getContentArray(path, { offset: 0 })))
     .then(() => dispatch(setLoading(false)))
     .catch((error) => dispatch(setError(true)));
 };
@@ -98,17 +101,31 @@ export const getContentArray = (path, params) => (dispatch) => {
     .catch((error) => dispatch(setError(true)));
 };
 
-export const uploadFile = (file) => (dispatch) => {
+export const uploadFile = (file, specialty, path) => (dispatch) => {
   dispatch(setLoading(true));
 
   API.axios
-    .post(`/admin/library`, file, {
-      headers: { "Content-Type": "multipart/form-data" },
+    .post(`/admin/library/${specialty}`, file, {
+      headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
     })
     .then((response) => {
       dispatch({ type: UPLOAD_FILE_SUCCESS, payload: response.data });
     })
+    .then(() => dispatch(getContentArray(path, { offset: 0 })))
     .then(() => dispatch(setLoading(false)))
+    .catch((error) => dispatch(setError(true)));
+};
+
+export const addPlace = (path, data) => (dispatch) => {
+  API.axios
+    .post(`${path}`, data)
+    .then((response) => {
+      dispatch({
+        type: ADD_PLACE_PRACTICE,
+        payload: response,
+      });
+    })
+    .then(() => dispatch(getContentArray(path, { offset: 0 })))
     .catch((error) => dispatch(setError(true)));
 };
 
@@ -122,12 +139,12 @@ export const downloadFile = (id) => (dispatch) => {
     })
     .then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
-      console.log(response);
+
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute(
         "download",
-        response.headers["content-disposition"].split("filename=")[1]
+        decodeURI(response.headers["content-disposition"].split("filename=")[1])
       );
       link.click();
       window.URL.revokeObjectURL(url);

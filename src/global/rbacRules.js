@@ -11,6 +11,8 @@ const rules = {
       "library-page:visit",
       "learning-activities-page:visit",
       "learning-activities:add",
+      "practice-page:visit",
+      "practice-page:add",
       "subjects-page:visit",
     ],
     dynamic: {
@@ -32,9 +34,13 @@ const rules = {
       "home-page:visit",
       "stg-page:visit",
       "semester-page:visit",
+      "semester-page:setExam",
       "library-page:visit",
       "library:add",
       "learning-activities-page:visit",
+      "learning-activities-page:setMark",
+      "practice-page:visit",
+      "practice-page:setMark",
       "subjects-page:visit",
     ],
     dynamic: {

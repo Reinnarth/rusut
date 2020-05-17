@@ -40,30 +40,30 @@ function CenteredTabs(props) {
             textColor="primary"
             centered
           >
-            <Tab value={routes.semester} label="Семестр" />
+            <Tab value={routes.semester} label="Сессия" />
             <Tab value={routes.library} label="Библиотека" />
             <Tab
               value={routes.learningActivities}
-              label="Learning activities"
+              label="Учебная деятельность"
+            />
+              <Tab
+              value={routes.practice}
+              label="Практики"
             />
             <Can
               role={user.nameRole}
               perform="admin-page:visit"
-              yes={(props) => (
-                <Tab
-                  {...props}
-                  value={`${routes.admin}/users`}
-                  label="Admin Panel"
-                />
-              )}
+              value={`${routes.admin}/users`}
+              label="Admin Panel"
+              yes={(props) => <Tab {...props} />}
               no={() => <></>}
             />
             <Can
               role={user.nameRole}
               perform="stg-page:visit"
-              yes={(props) => (
-                <Tab {...props} value={routes.stg} label="Группы" />
-              )}
+              value={routes.stg}
+              label="Группы"
+              yes={(props) => <Tab {...props} />}
               no={() => <></>}
             />
           </Tabs>

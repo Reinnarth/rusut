@@ -12,17 +12,12 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import lodash from "lodash";
 
-import {
-  addStg,
-  deleteStg,
-  getClassifiers,
-  getStg,
-} from "../../store/stg/stgActions";
+import { addStg, deleteStg, getStg } from "../../store/stg/stgActions";
 import StgForm from "./StgAux/StgForm";
 
 const styles = (theme) => ({
   container: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
   },
   paper: {
     maxWidth: "80%",
@@ -30,7 +25,11 @@ const styles = (theme) => ({
     overflow: "hidden",
     backgroundColor: "#f7f7f7",
   },
+  groups: {
+    marginTop: theme.spacing(2),
 
+    marginLeft: theme.spacing(1),
+  },
   addUser: {
     marginRight: theme.spacing(1),
   },
@@ -49,12 +48,8 @@ function StgPage(props) {
   const { classes } = props;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
-  const classifiers = useSelector((state) => state.stgReducer.classifiers);
+  const classifiers = useSelector((state) => state.userReducer.classifiers);
   const loading = useSelector((state) => state.viewReducer.loading);
-
-  useEffect(() => {
-    dispatch(getClassifiers());
-  }, []);
 
   const postSTG = (stg) => {
     dispatch(addStg(stg, user.userId));
@@ -82,17 +77,31 @@ function StgPage(props) {
           <Grid className={classes.container} item xs={6}>
             <Paper className={classes.paper} square>
               {user.stg.map((el, index) => (
-                <Paper key={index} square>
+                <Grid item xs={12} className={classes.groups} key={index}>
                   <Typography>{el.subject}</Typography>
-                  <Typography>{el.subject}</Typography>
+                  <nobr>
+                    <Typography component="span">Группы: </Typography>
+                    {el.groups.map((group, index) => (
+                      <Typography
+                        component="span"
+                        key={index}
+                      >{` ${group}`}</Typography>
+                    ))}
+                  </nobr>
+                  <div>
+                    <Typography component="span">Семестры: </Typography>
+                    {el.semesters.map((semester) => (
+                      <Typography component="span" key={index}>{` ${semester}`}</Typography>
+                    ))}
+                  </div>
                   <Button
                     color="secondary"
                     variant="outlined"
                     onClick={(event) => deleteSTG(el, event)}
                   >
-                    delet this
+                    Удалить связь
                   </Button>
-                </Paper>
+                </Grid>
               ))}
             </Paper>
           </Grid>

@@ -4,10 +4,11 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import SignInContainer from "../containers/AuthContainers/SignInContainer";
 import SignUpContainer from "../containers/AuthContainers/SignUpContainer";
 import SemesterPage from "./pages/SemesterPage";
-import LibraryPage from "./pages/LibraryPage";
+import LibraryContainer from "../containers/LibraryContainer/LibraryContainer";
 import LearningActivitiesPage from "./pages/LearningActivitiesPage";
 import StgPage from "./pages/StgPage";
-
+import PracticePage from "./pages/PracticePage";
+import ProfilePageContainer from "../containers/ProfileContainer/ProfilePageContainer";
 import AdminContainer from "../containers/AdminContainer/AdminContainer";
 import MenuContainer from "../containers/MenuContainer/MenuContainer.js";
 import * as route from "../global/routes";
@@ -28,7 +29,7 @@ export default class App extends Component {
       exact: true,
       page: () => (
         <>
-          <MenuContainer /> <LibraryPage />
+          <MenuContainer /> <LibraryContainer />
         </>
       ),
     },
@@ -38,6 +39,24 @@ export default class App extends Component {
       page: () => (
         <>
           <MenuContainer /> <LearningActivitiesPage />
+        </>
+      ),
+    },
+    {
+      path: route.practice,
+      exact: true,
+      page: () => (
+        <>
+          <MenuContainer /> <PracticePage />
+        </>
+      ),
+    },
+    {
+      path: route.profile,
+      exact: true,
+      page: () => (
+        <>
+          <MenuContainer /> <ProfilePageContainer />
         </>
       ),
     },

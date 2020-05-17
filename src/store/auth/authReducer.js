@@ -1,7 +1,7 @@
 import { FETCH_LOGIN_SUCCESS, FETCH_REGISTER_SUCCESS } from "./authConstants";
 const initialState = {
   token: null,
-  role: ''
+  role: "",
 };
 
 export default function authReducer(state = initialState, action) {
@@ -16,7 +16,6 @@ export default function authReducer(state = initialState, action) {
     case FETCH_REGISTER_SUCCESS:
       return {
         ...state,
-        token: action.token,
       };
 
     default:

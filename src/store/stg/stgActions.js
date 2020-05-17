@@ -37,17 +37,3 @@ export const deleteStg = (data, id) => (dispatch) => {
     .then(() => dispatch(setLoading(false)))
     .catch((error) => dispatch(setError(true)));
 };
-
-export const getClassifiers = () => (dispatch) => {
-  dispatch(setLoading(true));
-  API.axios
-    .get("/teacher/classifiers")
-    .then((response) => {
-      dispatch({
-        type: FETCH_CLASSIFIERS_SUCCESS,
-        payload: response.data,
-      });
-    })
-    .then(() => dispatch(setLoading(false)))
-    .catch((error) => dispatch(setError(true)));
-};

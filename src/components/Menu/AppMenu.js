@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-
-import { withRouter } from "react-router";
+import { useHistory } from "react-router";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -75,12 +74,11 @@ const useStyles = makeStyles((theme) => ({
 
 function MenuAppBar(props) {
   const classes = useStyles();
-
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   useEffect(() => {
-    console.log(props);
     props.getCurrentUser(localStorage.getItem("login"));
   }, []);
 
@@ -88,7 +86,7 @@ function MenuAppBar(props) {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    history.push("/profile");
   };
 
   const handleMobileMenuClose = () => {
@@ -142,7 +140,15 @@ function MenuAppBar(props) {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>Logout</MenuItem>
+      <MenuItem
+        onClick={() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("login");
+          window.history.go("/signin");
+        }}
+      >
+        Logout
+      </MenuItem>
     </Menu>
   );
 

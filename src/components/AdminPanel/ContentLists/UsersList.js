@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -7,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import SingleContentContainer from "../../../containers/AdminContainer/SingleContentContainer";
 
+import { deleteOneContent } from "../../../store/admin/adminActions";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -22,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UsersList(props) {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const users = useSelector((state) => state.adminReducer.content);
   return (
     <div>
@@ -56,10 +60,21 @@ export default function UsersList(props) {
                     )}
                   </Grid>
                   <Grid item xs={2}>
-                    <SingleContentContainer userId={user.userId} />
+                    <SingleContentContainer id={user.userId} />
                   </Grid>
                   <Grid item xs={2}>
-                    <Button color="secondary" variant="outlined">
+                    <Button
+                      color="secondary"
+                      variant="outlined"
+                      onClick={() =>
+                        dispatch(
+                          deleteOneContent(
+                            user.userId,
+                            history.location.pathname
+                          )
+                        )
+                      }
+                    >
                       Удалить
                     </Button>
                   </Grid>

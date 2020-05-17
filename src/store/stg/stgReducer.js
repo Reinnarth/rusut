@@ -7,17 +7,10 @@ import {
 
 const initialState = {
   stg: [],
-  classifiers: [],
 };
 
 export default function stgReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_CLASSIFIERS_SUCCESS:
-      return {
-        ...state,
-        classifiers: action.payload,
-      };
-
     case FETCH_STG_SUCCESS:
       return {
         ...state,

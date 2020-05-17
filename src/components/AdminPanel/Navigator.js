@@ -15,12 +15,13 @@ import MenuBookIcon from "@material-ui/icons/MenuBook";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import PeopleIcon from "@material-ui/icons/People";
 import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
+import ApartmentIcon from '@material-ui/icons/Apartment';
 
 import { setLocation, setTab } from "../../store/admin/adminActions";
 
 const categories = [
   {
-    id: "Categories",
+    id: "Категории",
     children: [
       { id: "Пользователи", location: "/admin/users", icon: <PeopleIcon /> },
       {
@@ -37,6 +38,11 @@ const categories = [
         id: "Практики",
         location: "/admin/internships",
         icon: <AssignmentIcon />,
+      },
+      {
+        id: "Места практик",
+        location: "/admin/place_practice",
+        icon: <ApartmentIcon />,
       },
     ],
   },

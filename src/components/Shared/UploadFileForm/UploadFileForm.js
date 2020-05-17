@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   Input,
@@ -9,6 +9,8 @@ import {
   Grid,
   Box,
   Container,
+  InputLabel,
+  Select,
   FormControl,
   FormControlLabel,
   Typography,
@@ -20,7 +22,6 @@ import lodash from "lodash";
 import * as yup from "yup";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { uploadFile, getContentArray } from "../../../store/admin/adminActions";
 
 const uploadSchema = yup.object().shape({
   name: yup.string().required("Обязательно для заполнения"),
@@ -61,19 +62,22 @@ export default function UpdateFileForm(props) {
   const { register, handleSubmit, errors } = useForm({
     validationSchema: uploadSchema,
   });
-  const dispatch = useDispatch();
   let history = useHistory();
   const classes = useStyles();
+  const classifiers = useSelector(
+    (state) => state.adminReducer.classifiers || state.userReducer.classifiers
+  );
   const [authors, setAuthors] = useState([]);
+  const [specialty, setSpecialty] = useState("");
   const [name, setName] = useState("");
   const [file, setFile] = useState(new FormData());
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     file.append("name", name);
     file.append("authors", authors);
-    await dispatch(uploadFile(file));
-    await dispatch(getContentArray(history.location.pathname, { offset: 0 }));
-    props.setOpen(false)
+
+    props.uploadFile(file, specialty, history.location.pathname);
+    props.setOpen(false);
   };
 
   return (
@@ -85,83 +89,110 @@ export default function UpdateFileForm(props) {
           Загрузить файл
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={register}
-            // required
-            fullWidth
-            id="login"
-            label="Название"
-            name="name"
-            autoComplete="name"
-            autoFocus
-            onChange={(event) => {
-              setName(event.target.value);
-            }}
-          />
-          {errors.login && <p>{errors.login.message}</p>}
+          <Grid container>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={register}
+              // required
+              fullWidth
+              id="login"
+              label="Название"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              onChange={(event) => {
+                setName(event.target.value);
+              }}
+            />
+            {errors.login && <p>{errors.login.message}</p>}
 
-          <Button
-            color="inherit"
-            variant="outlined"
-            onClick={() => setAuthors(lodash.concat(authors, ""))}
-          >
-            Добавить автора
-          </Button>
-          {authors.map((author, index) => (
-            <div key={index}>
-              <TextField
-                inputRef={register}
-                value={author}
-                variant="outlined"
-                margin="normal"
-                // required
-                fullWidth
-                name="author"
-                label="Полное имя автора"
-                type="text"
-                id="author"
-                autoComplete="current-password"
-                onChange={(event) =>
-                  setAuthors(
-                    authors.map((el, ind) => {
-                      if (ind === index) {
-                        return event.target.value;
-                      }
-                      return el;
-                    })
-                  )
-                }
-              />
-              {errors.password && <p>{errors.password.message}</p>}
-              <Button
-                color="secondary"
-                variant="outlined"
-                onClick={() => {
-                  const newAuthors = authors.filter((el, ind) => ind !== index);
-                  setAuthors(newAuthors);
-                }}
-              >
-                Удалить
-              </Button>
-            </div>
-          ))}
+            <Button
+              color="inherit"
+              variant="outlined"
+              onClick={() => setAuthors(lodash.concat(authors, ""))}
+            >
+              Добавить автора
+            </Button>
+            {authors.map((author, index) => (
+              <div key={index}>
+                <TextField
+                  inputRef={register}
+                  value={author}
+                  variant="outlined"
+                  margin="normal"
+                  // required
+                  fullWidth
+                  name="author"
+                  label="Полное имя автора"
+                  type="text"
+                  id="author"
+                  autoComplete="current-password"
+                  onChange={(event) =>
+                    setAuthors(
+                      authors.map((el, ind) => {
+                        if (ind === index) {
+                          return event.target.value;
+                        }
+                        return el;
+                      })
+                    )
+                  }
+                />
+                {errors.password && <p>{errors.password.message}</p>}
 
-          {errors.password && <p>{errors.password.message}</p>}
-          <Input
-            type="file"
-            multiple
-            className={classes.input}
-            onChange={(event) => {
-              let formData = new FormData();
-              formData.append("file", event.target.files[0]);
-              setFile(formData);
-            }}
-          ></Input>
-          <Button type="submit" color="inherit" variant="outlined">
-            Загрузить
-          </Button>
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  onClick={() => {
+                    const newAuthors = authors.filter(
+                      (el, ind) => ind !== index
+                    );
+                    setAuthors(newAuthors);
+                  }}
+                >
+                  Удалить
+                </Button>
+              </div>
+            ))}
+
+            {errors.password && <p>{errors.password.message}</p>}
+            <Grid item xs={10}>
+              <FormControl className={classes.formControl}>
+                <InputLabel>Специальность</InputLabel>
+                <Select
+                  value={specialty}
+                  defaultValue=""
+                  onChange={(event) => setSpecialty(event.target.value)}
+                  inputProps={{
+                    name: "specialty",
+                  }}
+                >
+                  {classifiers.specialty.map((spec, index) => {
+                    return (
+                      <option key={index} value={spec.nameSpecialty}>
+                        {spec.nameSpecialty}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Input
+              type="file"
+              multiple
+              className={classes.input}
+              onChange={(event) => {
+                let formData = new FormData();
+                formData.append("file", event.target.files[0]);
+                setFile(formData);
+              }}
+            ></Input>
+            <Button type="submit" color="inherit" variant="outlined">
+              Загрузить
+            </Button>
+          </Grid>
         </form>
       </Paper>
     </Container>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -22,6 +21,7 @@ import RefreshIcon from "@material-ui/icons/Refresh";
 
 import PaginationControlled from "../Shared/Pagination/Pagination";
 import UploadFileForm from "../Shared/UploadFileForm/UploadFileForm";
+import SinglePracticePlace from "./SingleContent/SinglePracticePlace";
 import { ContentSwitch } from "./ContentLists/ContentSwitch";
 
 const styles = (theme) => ({
@@ -29,6 +29,19 @@ const styles = (theme) => ({
     maxWidth: 936,
     margin: "auto",
     overflow: "hidden",
+  },
+  practiceConstr: {
+    backgroundColor: theme.palette.background.paper,
+    maxWidth: "auto",
+    maxHeight: "20em",
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  modal: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: theme.spacing(8),
   },
   searchBar: {
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
@@ -84,7 +97,9 @@ function Content(props) {
     setOpen(false);
   };
 
-  console.log(params);
+  const handleCloseButForPractice = () => {
+    setOpen(false);
+  };
 
   return (
     <Paper className={classes.paper} square>
@@ -111,7 +126,7 @@ function Content(props) {
                 }}
               />
             </Grid>
-            {tab === "library" && (
+            {(tab === "library") | (tab === "place_practice") && (
               <Grid item xs>
                 <Button
                   color="primary"
@@ -182,22 +197,54 @@ function Content(props) {
         {/* {loading && <CircularProgress />} */}
 
         {/* {!loading && <></>} */}
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={open}
-          onClose={handleClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={open}>
-            <UploadFileForm setOpen={setOpen}></UploadFileForm>
-          </Fade>
-        </Modal>
+        {tab === "library" && (
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={open}>
+              <UploadFileForm
+                setOpen={setOpen}
+                uploadFile={props.uploadFile}
+              ></UploadFileForm>
+            </Fade>
+          </Modal>
+        )}
+        {tab === "place_practice" && (
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={open}
+            onClose={handleCloseButForPractice}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={open}>
+              <div className={classes.practiceConstr}>
+                <SinglePracticePlace
+                  handleClose={handleCloseButForPractice}
+                  tab={tab}
+                  editFlag={true}
+                  classifiers={classifiers}
+                  updateContent={props.addPlace}
+                />
+              </div>
+            </Fade>
+          </Modal>
+        )}
+
         <ContentSwitch />
       </div>
       <div className={classes.paginationWrapper}>
@@ -212,9 +259,5 @@ function Content(props) {
     </Paper>
   );
 }
-
-Content.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(Content);

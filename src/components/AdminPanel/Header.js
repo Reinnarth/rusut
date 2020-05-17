@@ -97,6 +97,11 @@ function Header(props) {
             <Grid item>
               <ExitToAppIcon
                 className={classes.iconButtonAvatar}
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("login");
+                  window.history.go("/signin");
+                }}
               ></ExitToAppIcon>
             </Grid>
           </Grid>

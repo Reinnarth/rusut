@@ -23,16 +23,11 @@ export const signUp = (data) => (dispatch) => {
   API.axios
     .post("/registration", data)
     .then((response) => {
-      if (response.data.token) {
-        window.history.go("/semester");
-        localStorage.setItem("token", response.data.token);
-
-        dispatch({
-          type: FETCH_REGISTER_SUCCESS,
-          token: response.data.token,
-        });
-      } else {
-      }
+      window.history.go("/signin");
+      dispatch({
+        type: FETCH_REGISTER_SUCCESS,
+        token: response.data.token,
+      });
     })
     .catch((e) => console.log(e));
 };

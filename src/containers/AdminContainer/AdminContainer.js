@@ -6,6 +6,8 @@ import {
   getContentArray,
   getClassifiers,
   downloadFile,
+  uploadFile,
+  addPlace,
 } from "../../store/admin/adminActions";
 
 const mapStateToProps = (state) => ({
@@ -21,7 +23,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getClassifiers: () => dispatch(getClassifiers()),
   getContentArray: (path, params) => dispatch(getContentArray(path, params)),
+  uploadFile: (file, path, endp) => dispatch(uploadFile(file, path, endp)),
   downloadFile: (id) => dispatch(downloadFile(id)),
+  addPlace: (path, data) => dispatch(addPlace(path, data)),
 });
 
 export default withRouter(

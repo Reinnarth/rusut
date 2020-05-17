@@ -4,7 +4,7 @@ import SingleSwitch from "../../components/AdminPanel/SingleContent/SingleSwitch
 import {
   getClassifiers,
   getOneContent,
-  updateUser,
+  updateContent,
   getContentArray,
   deleteOneContent,
   downloadFile,
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
   getOneContent: (id, path) => dispatch(getOneContent(id, path)),
   getContentArray: (path, params) => dispatch(getContentArray(path, params)),
   getClassifiers: () => dispatch(getClassifiers()),
-  updateUser: (data) => dispatch(updateUser(data)),
+  updateContent: (path, data) => dispatch(updateContent(path, data)),
   deleteOneContent: (id, path) => dispatch(deleteOneContent(id, path)),
   downloadFile: (id) => dispatch(downloadFile(id)),
 });
