@@ -72,7 +72,10 @@ class ProfilePage extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = () => {};
+  handleSubmit = () => {
+    const data = {};
+    this.props.updateSelf(data);
+  };
 
   render() {
     const {
