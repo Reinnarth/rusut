@@ -40,12 +40,6 @@ export default function User({ newUser, editFlag, classifiers, handleChange }) {
         </Grid>
         <Grid item xs={10}>
           <FormControl>
-            <InputLabel>Логин</InputLabel>
-            <Input value={newUser.login} name="login" onChange={handleChange} />
-          </FormControl>
-        </Grid>
-        <Grid item xs={10}>
-          <FormControl>
             <InputLabel>Email</InputLabel>
             <Input value={newUser.email} name="email" onChange={handleChange} />
           </FormControl>
@@ -76,7 +70,6 @@ export default function User({ newUser, editFlag, classifiers, handleChange }) {
         <Typography>
           {newUser.surname} {newUser.name} {newUser.middlename}
         </Typography>
-        <Typography>Логин: {newUser.login}</Typography>
         <Typography>Роль: {newUser.nameRole}</Typography>
         <Typography>Email: {newUser.email}</Typography>
       </>

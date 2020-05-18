@@ -14,10 +14,10 @@ export const menuTabs = [
         label: "Преподаватели",
         name: "teachers",
       },
-      {
-        label: "Администраторы",
-        name: "admins",
-      },
+      // {
+      //   label: "Администраторы",
+      //   name: "admins",
+      // },
     ],
   },
   {
@@ -27,14 +27,14 @@ export const menuTabs = [
         label: "Книги",
         name: "library",
       },
-      {
-        label: "Authors",
-        name: "authors",
-      },
-      {
-        label: "Subject",
-        name: "subject",
-      },
+      // {
+      //   label: "Authors",
+      //   name: "authors",
+      // },
+      // {
+      //   label: "Subject",
+      //   name: "subject",
+      // },
     ],
   },
   {

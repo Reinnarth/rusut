@@ -26,7 +26,7 @@ export default function PaginationControlled(props) {
 
   return (
     <div className={classes.root}>
-      <Typography>Page: {page}</Typography>
+      <Typography>Страница: {page}</Typography>
       <Pagination count={props.pagecount} page={page} onChange={handleChange} />
     </div>
   );

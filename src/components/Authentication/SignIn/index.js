@@ -103,10 +103,6 @@ export default function SignIn(props) {
           />
           {errors.password && <p>{errors.password.message}</p>}
 
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -117,11 +113,6 @@ export default function SignIn(props) {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
             <Grid item>
               <Link
                 variant="body2"

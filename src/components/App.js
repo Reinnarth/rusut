@@ -77,6 +77,7 @@ export default class App extends Component {
       ),
     },
   ];
+  
   render() {
     if (localStorage.getItem("token") === null) {
       return (

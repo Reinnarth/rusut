@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   avatar: {
     margin: theme.spacing(1),
