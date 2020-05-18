@@ -1,8 +1,8 @@
 import API from "../../global/api";
 import {
-  FETCH_EXAMS_SUCCESS,
   FETCH_UPLOADS_SUCCESS,
   ADD_FILE_SUCCESS,
+  SET_SESSION_LOADING,
 } from "./internshipConstants";
 
 import { setLoading, setError } from "../view/viewActions";
@@ -21,8 +21,21 @@ export const getMyUploads = (path, id) => (dispatch) => {
     .catch((error) => dispatch(setError(true)));
 };
 
+export const getStudentUploads = (path, id) => (dispatch) => {
+  dispatch(setSessionLoading(true));
+  API.axios
+    .get(`/teacher${path}/${id}`)
+    .then((response) => {
+      dispatch({
+        type: FETCH_UPLOADS_SUCCESS,
+        payload: response.data,
+      });
+    })
+    .then(() => dispatch(setSessionLoading(false)))
+    .catch((error) => dispatch(setError(true)));
+};
+
 export const addFile = (path, file, id) => (dispatch) => {
-  console.log("hehehaha");
   API.axios
     .post(`/student${path}/${id}`, file, {
       headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
@@ -38,20 +51,15 @@ export const addFile = (path, file, id) => (dispatch) => {
     .catch((error) => dispatch(setError(true)));
 };
 
-export const setMark = (path, file, id) => (dispatch) => {
-  console.log("hehehaha");
+export const setMark = (path, data, id) => (dispatch) => {
   API.axios
-    .post(`/student${path}/${id}`, file, {
-      headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
-    })
+    .put(`/teacher${path}/${id}`, data)
     .then((response) => {
       dispatch({
         type: ADD_FILE_SUCCESS,
         payload: response.data,
       });
     })
-    .then(() => dispatch(getMyUploads(path, id)))
-
     .catch((error) => dispatch(setError(true)));
 };
 
@@ -76,4 +84,11 @@ export const downloadFile = (path, id) => (dispatch) => {
     })
     .then(() => dispatch(setLoading(false)))
     .catch((error) => dispatch(setError(true)));
+};
+
+export const setSessionLoading = (sessionLoading) => (dispatch) => {
+  dispatch({
+    type: SET_SESSION_LOADING,
+    payload: sessionLoading,
+  });
 };

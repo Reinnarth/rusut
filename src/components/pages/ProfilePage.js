@@ -48,7 +48,10 @@ class ProfilePage extends Component {
       email: user.email,
       password: "",
       userId: user.userId,
-      edit: false,
+      editInfo: false,
+      editPassword: false,
+      oldPassword: "",
+      newPassword: "",
     };
   }
 
@@ -72,23 +75,34 @@ class ProfilePage extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handlePwChange = () => {
+    const { user, updatePassword } = this.props;
+    const { oldPassword, newPassword } = this.state;
+    const data = { oldPassword, newPassword };
+    updatePassword(data, user.userId);
+    this.setState({ editPassword: false });
+  };
+
   handleSubmit = () => {
-    const data = {};
+    const { user } = this.props;
+    const { name, surname, middlename, email } = this.state;
+    const data = { ...user, name, surname, middlename, email };
     this.props.updateSelf(data);
   };
 
   render() {
     const {
-      login,
       name,
       surname,
       middlename,
       email,
-      password,
-      edit,
+      editPassword,
+      editInfo,
+      oldPassword,
+      newPassword,
     } = this.state;
-    const { user, classes } = this.props;
-    console.log(this.state);
+    const { user, classes, updatePassword } = this.props;
+
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -97,27 +111,66 @@ class ProfilePage extends Component {
           <Typography component="h1" variant="h5">
             Профиль
           </Typography>
-          {edit && (
+          {editPassword && (
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  value={oldPassword}
+                  fullWidth
+                  onChange={this.handleChange}
+                  type="password"
+                  id="oldpw"
+                  label="Старый пароль"
+                  name="oldPassword"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  value={newPassword}
+                  fullWidth
+                  onChange={this.handleChange}
+                  type="password"
+                  id="newpw"
+                  label="Новый пароль"
+                  name="newPassword"
+                />
+              </Grid>
+              <Grid className={classes.nameContainer} container spacing={2}>
+                <Grid xs={6}>
+                  {" "}
+                  <Button
+                    onClick={() => this.setState({ editPassword: false })}
+                    fullWidth
+                    variant="contained"
+                    color="inherit"
+                    className={classes.submit}
+                  >
+                    Отмена
+                  </Button>
+                </Grid>
+                <Grid xs={6}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={this.handlePwChange}
+                  >
+                    Подтвердить изменения
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          )}
+          {editInfo && (
             <form
               className={classes.form}
               onSubmit={this.handleSubmit}
               noValidate
             >
               <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    value={login}
-                    fullWidth
-                    id="login"
-                    label="Логин"
-                    name="login"
-                    onChange={this.handleChange}
-                    autoComplete="login"
-                    autoFocus
-                  />
-                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     variant="outlined"
@@ -169,47 +222,74 @@ class ProfilePage extends Component {
                   />
                 </Grid>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
+              <Grid className={classes.nameContainer} container spacing={2}>
+                <Grid xs={6}>
+                  <Button
+                    onClick={() => this.setState({ editInfo: false })}
+                    fullWidth
+                    variant="contained"
+                    color="inherit"
+                    className={classes.submit}
+                  >
+                    Отмена
+                  </Button>
+                </Grid>
+                <Grid xs={6}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Подтвердить изменения
+                  </Button>
+                </Grid>
+              </Grid>
               >
-                Подтвердить изменения
-              </Button>
             </form>
           )}
-          {!edit && (
-            <Grid className={classes.nameContainer} container spacing={2}>
-              <Grid item xs={3}>
-                <Typography component="span">{surname}</Typography>
-              </Grid>
-              <Grid item xs={3}>
-                <Typography component="span">{name}</Typography>
-              </Grid>
+          {!editInfo && !editPassword && (
+            <>
+              <Grid className={classes.nameContainer} container spacing={2}>
+                <Grid item xs={3}>
+                  <Typography component="span">{surname}</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography component="span">{name}</Typography>
+                </Grid>
 
-              <Grid item xs={3}>
-                <Typography component="span">{middlename}</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography>{login}</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography>{email}</Typography>
-              </Grid>
+                <Grid item xs={3}>
+                  <Typography component="span">{middlename}</Typography>
+                </Grid>
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={() => this.setState({ edit: true })}
-              >
-                Изменить данные
-              </Button>
-            </Grid>
+                <Grid item xs={12}>
+                  <Typography>{email}</Typography>
+                </Grid>
+              </Grid>
+              <Grid className={classes.nameContainer} container spacing={2}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={() => this.setState({ editInfo: true })}
+                >
+                  Изменить данные
+                </Button>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  onClick={() => this.setState({ editPassword: true })}
+                >
+                  Изменить пароль
+                </Button>
+              </Grid>
+            </>
           )}
         </Paper>
       </Container>

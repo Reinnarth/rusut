@@ -66,20 +66,20 @@ export default function PracticeUploadForm(props) {
   const [topic, setTopic] = useState("");
   const [semester, setSemester] = useState("");
   const [teacher, setTeacher] = useState("");
+  const [director, setDirector] = useState("");
   const [file, setFile] = useState(new FormData());
 
   const addPractice = () => {
-    console.log("submitting");
     file.append("topic", topic);
     file.append("semester", semester);
     file.append("placePractice", place);
     file.append("teacher", teacher);
+    file.append("director", director);
 
     props.addFile(history.location.pathname, file, props.user.userId);
     props.handleClose();
   };
 
-  console.log(place, semester, teacher);
   return (
     <Paper className={classes.paper}>
       {/* <Avatar className={classes.avatar}><LockOutlinedIcon /></Avatar> */}
@@ -151,13 +151,14 @@ export default function PracticeUploadForm(props) {
             margin="normal"
             // required
             fullWidth
+            value={director}
             id="login"
             label="Руководитель с места практики"
             name="topic"
             autoComplete="topic"
             autoFocus
             onChange={(event) => {
-              setTopic(event.target.value);
+              setDirector(event.target.value);
             }}
           />
         </Grid>

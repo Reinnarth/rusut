@@ -18,7 +18,7 @@ export default function PracticePage() {
       <Can
         role={user.nameRole}
         perform="practice-page:setMark"
-        yes={(props) => <StudentViewContainer {...props} />}
+        yes={(props) => <TeacherViewContainer {...props} />}
         no={() => <> </>}
       />
     </div>

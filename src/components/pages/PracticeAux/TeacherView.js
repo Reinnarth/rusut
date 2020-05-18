@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
-import Modal from "@material-ui/core/Modal";
+import DialogContent from "@material-ui/core/DialogContent";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Grid from "@material-ui/core/Grid";
@@ -52,18 +52,25 @@ const styles = (theme) => ({
 
 class TeacherView extends Component {
   state = {
-    exam: null,
+    upload: null,
     search: "",
+    mark: "",
     editFlag: false,
     showConstructor: false,
+    user: {},
   };
 
-  componentDidMount() {
-    const { getExams, user, loading } = this.props;
-    console.log(loading);
-    if (!loading) {
-      getExams(user.userId);
+  static getDerivedStateFromProps(props, state) {
+    if (props.user.userId !== state.user.userId) {
+      props.getStudentUploads(
+        props.history.location.pathname,
+        props.user.userId
+      );
+      return {
+        user: props.user,
+      };
     }
+    return null;
   }
 
   handleChange = (event) => {
@@ -74,55 +81,60 @@ class TeacherView extends Component {
     this.setState({ showConstructor: false, editFlag: false });
   };
 
-  handleEdit = (e, exame) => {
-    const { group, semester, subject } = exame;
-    const { user, exam, getExam } = this.props;
-    getExam({ group, semester, subject }, user.userId, () =>
-      this.setState({ editFlag: true, exam: exam })
-    );
-  };
-
   render() {
-    const { exam, search, editFlag, showConstructor } = this.state;
-    const { user, exams, classes, sessionLoading } = this.props;
-
+    const { mark, upload, showConstructor } = this.state;
+    const {
+      user,
+      uploads,
+      classes,
+      sessionLoading,
+      history,
+      setMark,
+      downloadFile,
+    } = this.props;
     const scroll = "paper";
     if (!sessionLoading) {
-      let list = exams
-        .filter((exam) => {
-          if (exam.group.toLowerCase().indexOf(search.toLowerCase()) !== -1) {
-            return true;
-          }
-          return false;
-        })
-        .map((exam, index) => {
-          return (
-            <Grid container key={index}>
-              <Grid item xs={12}>
-                <Grid container className={classes.contentWrapper}>
-                  <Grid item xs={2}>
-                    <Typography component="h1">{exam.type}</Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <Typography component="h1">{exam.subject}</Typography>
-                  </Grid>
-                  <Grid item xs={3}>
-                    {exam.group}
-                  </Grid>
-                  <Grid item xs={2}>
-                    <Button
-                      onClick={(event) => this.handleEdit(event, exam)}
-                      color="primary"
-                      variant="outlined"
-                    >
-                      Изменить
-                    </Button>
-                  </Grid>
+      let list = uploads.map((upload, index) => {
+        return (
+          <Grid container key={index} className={classes.container}>
+            <Grid item xs={12}>
+              <Grid container className={classes.contentWrapper}>
+                <Grid item xs={3}>
+                  <Typography component="h1">Тема: {upload.topic}</Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography component="h1">{upload.student}</Typography>
+                </Grid>
+                <Grid component="h1" item xs={3}>
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={() =>
+                      this.setState({ showConstructor: true, upload: upload })
+                    }
+                  >
+                    Оценить
+                  </Button>
+                </Grid>
+                <Grid component="h1" item xs={3}>
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={() =>
+                      downloadFile(
+                        history.location.pathname,
+                        upload.internshipId
+                      )
+                    }
+                  >
+                    Скачать
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
-          );
-        });
+          </Grid>
+        );
+      });
 
       return (
         <Paper className={classes.paper} square>
@@ -132,39 +144,16 @@ class TeacherView extends Component {
             color="default"
             elevation={0}
           >
-            <Toolbar>
-              <Grid
-                container
-                className={classes.paper}
-                spacing={2}
-                alignItems="center"
+            {" "}
+            <Grid item xs>
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={() => this.setState({ showConstructor: true })}
               >
-                <Grid item>
-                  <SearchIcon className={classes.block} color="inherit" />
-                </Grid>
-                <Grid item xs>
-                  <TextField
-                    fullWidth
-                    placeholder="Search by name"
-                    onChange={this.handleChange}
-                    InputProps={{
-                      name: "search",
-                      disableUnderline: true,
-                      className: classes.searchInput,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs>
-                  <Button
-                    color="primary"
-                    variant="outlined"
-                    onClick={() => this.setState({ showConstructor: true })}
-                  >
-                    Выставить оценки
-                  </Button>
-                </Grid>
-              </Grid>
-            </Toolbar>
+                Загрузить работу
+              </Button>
+            </Grid>
           </AppBar>
           <div className={classes.contentWrapper}>
             <Dialog
@@ -173,10 +162,42 @@ class TeacherView extends Component {
               open={showConstructor}
               onClose={this.handleClose}
               dividers={scroll === "paper"}
-            ></Dialog>
-
-            <>{list}</>
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogContent>
+                <Grid item xs={3}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    onChange={this.handleChange}
+                    value={mark}
+                    // required
+                    fullWidth
+                    name="mark"
+                    label="Оценка"
+                  ></TextField>
+                </Grid>{" "}
+                <Grid item xs={3}>
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => {
+                      setMark(
+                        history.location.pathname,
+                        { mark: mark },
+                        upload.internshipId
+                      );
+                      this.setState({ showConstructor: false });
+                    }}
+                  >
+                    Подтвердить
+                  </Button>
+                </Grid>
+              </DialogContent>
+            </Dialog>
           </div>
+          <>{list}</>
         </Paper>
       );
     } else {

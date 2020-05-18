@@ -2,6 +2,7 @@ import {
   FETCH_USER_SUCCESS,
   FETCH_CLASSIFIERS_SUCCESS,
   UPDATE_SELF_SUCCESS,
+  UPDATE_PASSWORD_SUCCESS,
 } from "./userConstants";
 const initialState = {
   user: {},
@@ -24,6 +25,10 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload,
+      };
+    case UPDATE_PASSWORD_SUCCESS:
+      return {
+        ...state,
       };
     default:
       return state;

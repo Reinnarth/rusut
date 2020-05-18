@@ -48,14 +48,19 @@ const styles = (theme) => ({
 
 class StudentView extends Component {
   state = {
+    user: {},
     exam: null,
     showConstructor: false,
   };
 
-  componentDidMount() {
-    const { getMyUploads, user, history } = this.props;
-
-    getMyUploads(history.location.pathname, user.userId);
+  static getDerivedStateFromProps(props, state) {
+    if (props.user.userId !== state.user.userId) {
+      props.getMyUploads(props.history.location.pathname, props.user.userId);
+      return {
+        user: props.user,
+      };
+    }
+    return null;
   }
 
   handleClose = () => {
@@ -70,12 +75,12 @@ class StudentView extends Component {
       uploads,
       classes,
       loading,
+      sessionLoading,
       addFile,
       downloadFile,
     } = this.props;
     const scroll = "paper";
-    console.log(uploads);
-    if (!loading) {
+    if (!sessionLoading) {
       let list = uploads.map((upload, index) => {
         return (
           <Grid container key={index} className={classes.container}>
@@ -95,7 +100,10 @@ class StudentView extends Component {
                     color="primary"
                     variant="outlined"
                     onClick={() =>
-                      downloadFile(history.location.pathname, upload.internshipId)
+                      downloadFile(
+                        history.location.pathname,
+                        upload.internshipId
+                      )
                     }
                   >
                     Скачать

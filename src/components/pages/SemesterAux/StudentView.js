@@ -56,20 +56,24 @@ const styles = (theme) => ({
 
 class StudentView extends Component {
   state = {
+    user: {},
     exam: null,
     semester: 1,
   };
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.user.userId !== state.user.userId) {
+      props.getMyExams({ semester: 1 }, props.user.userId);
+      return {
+        user: props.user,
+      };
+    }
+    return null;
+  }
+
   handleChange = (event) => {
     this.setState({ [event.taget.name]: event.target.value });
   };
-
-  componentDidMount() {
-    const { getMyExams, user, loading } = this.props;
-    if (!loading) {
-      getMyExams({ semester: 1 }, user.userId);
-    }
-  }
 
   render() {
     const { semester } = this.state;

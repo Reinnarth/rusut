@@ -1,21 +1,17 @@
 import {
-  FETCH_EXAMS_SUCCESS,
   FETCH_UPLOADS_SUCCESS,
   ADD_FILE_SUCCESS,
+  SET_SESSION_LOADING,
 } from "./internshipConstants";
 
 const initialState = {
   exams: [],
   uploads: [],
+  sessionLoading: true,
 };
 
 export default function internshipReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_EXAMS_SUCCESS:
-      return {
-        ...state,
-        exams: action.payload,
-      };
     case FETCH_UPLOADS_SUCCESS:
       return {
         ...state,
@@ -27,6 +23,8 @@ export default function internshipReducer(state = initialState, action) {
         ...state,
         students: action.payload,
       };
+    case SET_SESSION_LOADING:
+      return { ...state, sessionLoading: action.payload };
 
     default:
       return state;

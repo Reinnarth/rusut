@@ -3,6 +3,7 @@ import {
   FETCH_USER_SUCCESS,
   FETCH_CLASSIFIERS_SUCCESS,
   UPDATE_SELF_SUCCESS,
+  UPDATE_PASSWORD_SUCCESS
 } from "./userConstants";
 import { setLoading, setError } from "../view/viewActions";
 
@@ -52,6 +53,20 @@ export const updateSelf = (data) => (dispatch) => {
     .then((response) => {
       dispatch({
         type: UPDATE_SELF_SUCCESS,
+        payload: data,
+      });
+    })
+    .then(() => dispatch(setLoading(false)))
+    .catch((error) => dispatch(setError(true)));
+};
+
+export const updatePassword = (data, id) => (dispatch) => {
+  dispatch(setLoading(true));
+  API.axios
+    .put(`/self/password/${id}`, data)
+    .then((response) => {
+      dispatch({
+        type: UPDATE_PASSWORD_SUCCESS,
         payload: data,
       });
     })

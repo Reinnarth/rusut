@@ -63,14 +63,19 @@ function LibraryPage(props) {
 
   const [params, setParams] = useState({ offset: 0 });
   const [open, setOpen] = useState(false);
-
+  const [bookList, setBookList] = useState([]);
+  
   useEffect(() => {
     console.log("hehe");
     getBooks(params);
   }, []);
 
+  useEffect(() => {
+    setBookList(books.content);
+  }, [books]);
+
   if (!loading) {
-    const list = books.content.map((book, index) => {
+    const list = bookList.map((book, index) => {
       return (
         <Grid container key={index}>
           <Grid item xs={12}>

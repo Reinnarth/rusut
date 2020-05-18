@@ -16,6 +16,7 @@ const mapStateToProps = (state) => ({
   user: state.userReducer.user,
   error: state.viewReducer.error,
   loading: state.viewReducer.loading,
+  sessionLoading: state.internshipReducer.sessionLoading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
