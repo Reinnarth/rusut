@@ -10,6 +10,7 @@ import { setLoading, setError } from "../view/viewActions";
 const roles = [
   ["ROLE_STUDENT", "student"],
   ["ROLE_TEACHER", "teacher"],
+  ["ROLE_ADMIN", "admin"],
 ];
 
 export const getCurrentUser = (login) => (dispatch) => {

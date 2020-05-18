@@ -84,7 +84,7 @@ export default function UpdateFileForm(props) {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Paper className={classes.paper}>
+      <div className={classes.paper}>
         {/* <Avatar className={classes.avatar}><LockOutlinedIcon /></Avatar> */}
         <Typography component="h1" variant="h5">
           Загрузить файл
@@ -195,7 +195,7 @@ export default function UpdateFileForm(props) {
             </Button>
           </Grid>
         </form>
-      </Paper>
+      </div>
     </Container>
   );
 }

@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import {
   Input,
   Button,
-  Fade,
+  DialogContent,
   TextField,
   Grid,
-  Modal,
+  Dialog,
   Container,
   Select,
   AppBar,
@@ -59,12 +59,20 @@ const styles = (theme) => ({
 });
 
 function LibraryPage(props) {
-  const { loading, classes, books, user, getBooks, downloadFile } = props;
+  const {
+    loading,
+    classes,
+    books,
+    classifiers,
+    user,
+    getBooks,
+    downloadFile,
+  } = props;
 
   const [params, setParams] = useState({ offset: 0 });
   const [open, setOpen] = useState(false);
   const [bookList, setBookList] = useState([]);
-  
+
   useEffect(() => {
     console.log("hehe");
     getBooks(params);
@@ -157,7 +165,7 @@ function LibraryPage(props) {
           </Toolbar>
         </AppBar>
         <div className={classes.contentWrapper}>
-          <Modal
+          <Dialog
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
             className={classes.modal}
@@ -169,13 +177,14 @@ function LibraryPage(props) {
               timeout: 500,
             }}
           >
-            <Fade in={open}>
+            <DialogContent>
               <UploadFileForm
                 setOpen={setOpen}
                 uploadFile={props.uploadBook}
+                classifiers={classifiers}
               ></UploadFileForm>
-            </Fade>
-          </Modal>
+            </DialogContent>
+          </Dialog>
           {/* {loading && <CircularProgress />} */}
 
           {/* {!loading && <></>} */}

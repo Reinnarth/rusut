@@ -6,9 +6,9 @@ import NativeSelect from "@material-ui/core/NativeSelect";
 import Toolbar from "@material-ui/core/Toolbar";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
-import Modal from "@material-ui/core/Modal";
+import Dialog from "@material-ui/core/Dialog";
 import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
+import Fade from "@material-ui/core/DialogContent";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
@@ -198,7 +198,7 @@ function Content(props) {
 
         {/* {!loading && <></>} */}
         {tab === "library" && (
-          <Modal
+          <Dialog
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
             className={classes.modal}
@@ -216,10 +216,10 @@ function Content(props) {
                 uploadFile={props.uploadFile}
               ></UploadFileForm>
             </Fade>
-          </Modal>
+          </Dialog>
         )}
         {tab === "place_practice" && (
-          <Modal
+          <Dialog
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
             className={classes.modal}
@@ -242,7 +242,7 @@ function Content(props) {
                 />
               </div>
             </Fade>
-          </Modal>
+          </Dialog>
         )}
 
         <ContentSwitch />

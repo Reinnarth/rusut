@@ -3,7 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Paper from "@material-ui/core/Paper";
-import Modal from "@material-ui/core/Modal";
+import DialogContent from "@material-ui/core/DialogContent";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Grid from "@material-ui/core/Grid";
@@ -184,14 +184,17 @@ class TeacherView extends Component {
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
             >
-              <ExamForm
-                user={user}
-                exam={exam}
-                getStudents={getStudents}
-                addExam={addExam}
-                handleClose={this.handleClose}
-                students={students}
-              ></ExamForm>
+              {" "}
+              <DialogContent>
+                <ExamForm
+                  user={user}
+                  exam={exam}
+                  getStudents={getStudents}
+                  addExam={addExam}
+                  handleClose={this.handleClose}
+                  students={students}
+                ></ExamForm>
+              </DialogContent>
             </Dialog>
             {/* <Modal
               aria-labelledby="transition-modal-title"

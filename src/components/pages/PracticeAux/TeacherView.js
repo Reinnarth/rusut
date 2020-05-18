@@ -143,18 +143,7 @@ class TeacherView extends Component {
             position="static"
             color="default"
             elevation={0}
-          >
-            {" "}
-            <Grid item xs>
-              <Button
-                color="primary"
-                variant="outlined"
-                onClick={() => this.setState({ showConstructor: true })}
-              >
-                Загрузить работу
-              </Button>
-            </Grid>
-          </AppBar>
+          ></AppBar>
           <div className={classes.contentWrapper}>
             <Dialog
               className={classes.modal}

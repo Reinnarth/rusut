@@ -14,6 +14,7 @@ const mapStateToProps = (state) => ({
   user: state.userReducer.user,
   books: state.libraryReducer.books,
   book: state.libraryReducer.book,
+  classifiers: state.userReducer.classifiers,
 });
 
 const mapDispatchToProps = (dispatch) => ({

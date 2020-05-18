@@ -58,7 +58,7 @@ class StudentView extends Component {
   state = {
     user: {},
     exam: null,
-    semester: 1,
+    semester: "1",
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -72,7 +72,8 @@ class StudentView extends Component {
   }
 
   handleChange = (event) => {
-    this.setState({ [event.taget.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
+    this.props.getMyExams({ semester:event.target.value}, this.props.user.userId);
   };
 
   render() {
@@ -113,18 +114,20 @@ class StudentView extends Component {
                 <InputLabel>Семестр</InputLabel>
                 <Select
                   value={semester}
+                  name="semester"
                   onChange={this.handleChange}
                   inputProps={{
                     name: "subject",
                   }}
                 >
-                  {new Array(8).map((el, index) => {
-                    return (
-                      <option key={index} value={index}>
-                        {index}
-                      </option>
-                    );
-                  })}
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                  <option value={6}>6</option>
+                  <option value={7}>7</option>
+                  <option value={8}>8</option>
                 </Select>
               </FormControl>
             </Grid>

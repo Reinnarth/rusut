@@ -8,7 +8,7 @@ import {
 import { setLoading, setError } from "../view/viewActions";
 
 export const getMyUploads = (path, id) => (dispatch) => {
-  dispatch(setLoading(true));
+  dispatch(setSessionLoading(true));
   API.axios
     .get(`/student${path}/${id}`)
     .then((response) => {
@@ -17,7 +17,7 @@ export const getMyUploads = (path, id) => (dispatch) => {
         payload: response.data,
       });
     })
-    .then(() => dispatch(setLoading(false)))
+    .then(() => dispatch(setSessionLoading(false)))
     .catch((error) => dispatch(setError(true)));
 };
 
