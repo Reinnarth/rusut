@@ -66,7 +66,7 @@ export default function SignIn(props) {
       <div className={classes.paper}>
         {/* <Avatar className={classes.avatar}><LockOutlinedIcon /></Avatar> */}
         <Typography component="h1" variant="h5">
-          Sign in
+          Авторизация
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <TextField
@@ -110,7 +110,7 @@ export default function SignIn(props) {
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            Войти
           </Button>
           <Grid container>
             <Grid item>
@@ -120,7 +120,7 @@ export default function SignIn(props) {
                   props.history.push("/signup");
                 }}
               >
-                {"Don't have an account? Sign Up"}
+                {"Зарегистрироваться"}
               </Link>
             </Grid>
           </Grid>

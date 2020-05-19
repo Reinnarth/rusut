@@ -23,7 +23,9 @@ export const signUp = (data) => (dispatch) => {
   API.axios
     .post("/registration", data)
     .then((response) => {
-      window.history.go("/signin");
+      if (response.status === 200) {
+        window.location.assign(`${window.location.origin}/signin`);
+      }
       dispatch({
         type: FETCH_REGISTER_SUCCESS,
         token: response.data.token,

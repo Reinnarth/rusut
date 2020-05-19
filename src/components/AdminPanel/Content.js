@@ -136,9 +136,9 @@ function Content(props) {
                   Добавить
                 </Button>
               </Grid>
-            )}
-            <Grid item xs>
-              {tab === "teachers" && (
+            )}{" "}
+            {tab === "teachers" && (
+              <Grid item xs>
                 <NativeSelect
                   value={params.position}
                   onChange={handleChange}
@@ -152,8 +152,8 @@ function Content(props) {
                     </option>
                   ))}
                 </NativeSelect>
-              )}
-            </Grid>
+              </Grid>
+            )}
             <Grid item>
               {tab === "students" && (
                 <NativeSelect

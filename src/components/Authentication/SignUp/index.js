@@ -67,7 +67,7 @@ export default function SignUp(props) {
       <div className={classes.paper} onSubmit={handleSubmit(onSubmit)}>
         {/* <Avatar className={classes.avatar}></Avatar> */}
         <Typography component="h1" variant="h5">
-          Sign up
+         Регистрация
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -157,7 +157,7 @@ export default function SignUp(props) {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+           Зарегистрироваться
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
@@ -167,7 +167,7 @@ export default function SignUp(props) {
                 }}
                 variant="body2"
               >
-                Already have an account? Sign in
+                Уже есть аккаунт? Войти
               </Link>
             </Grid>
           </Grid>

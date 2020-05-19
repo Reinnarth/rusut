@@ -23,7 +23,7 @@ const styles = (theme) => ({
     padding: theme.spacing(2),
     width: "40.5rem",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "center",
     color: theme.palette.text.primary,
   },
   gridColumn: { width: "40.5rem" },
@@ -46,7 +46,6 @@ const styles = (theme) => ({
   addUser: {
     marginRight: theme.spacing(1),
   },
-
 });
 
 class ExamForm extends Component {
@@ -135,7 +134,7 @@ class ExamForm extends Component {
               spacing={6}
               className={classes.gridRow}
             >
-              <Grid item xs={2} justify="center" alignItems="center">
+              <Grid item xs={2}>
                 <FormControl>
                   <InputLabel>Формат аттестации</InputLabel>
                   <Select
@@ -161,7 +160,7 @@ class ExamForm extends Component {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={10} justify="center" alignItems="center">
+              <Grid item xs={10}>
                 <FormControl>
                   <InputLabel>Предмет</InputLabel>
                   <Select
@@ -191,7 +190,7 @@ class ExamForm extends Component {
                 alignItems="center"
                 spacing={1}
               >
-                <Grid item xs={1}>
+                <Grid item xs={4}>
                   <FormControl>
                     <InputLabel>Группа</InputLabel>
                     <Select
@@ -213,7 +212,7 @@ class ExamForm extends Component {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={4}>
                   <FormControl>
                     <InputLabel>Семестр</InputLabel>
                     <Select
@@ -237,7 +236,7 @@ class ExamForm extends Component {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={4}>
                   <FormControl>
                     <InputLabel>Кол-во часов</InputLabel>
                     <Input

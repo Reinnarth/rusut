@@ -21,6 +21,8 @@ import * as yup from "yup";
 
 import { makeStyles } from "@material-ui/core/styles";
 
+import { SelectInput } from "../../Shared/SelectInput/SelectInput";
+
 const uploadSchema = yup.object().shape({
   name: yup.string().required("Обязательно для заполнения"),
   author: yup.string().required("Обязательно для заполнения"),
@@ -34,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
+  },
+  formControl: {
+    margin: 0,
+    fullWidth: true,
+    minWidth: "10rem",
+    wrap: "wrap",
   },
   input: {
     marginTop: theme.spacing(2),
@@ -63,6 +71,7 @@ export default function PracticeUploadForm(props) {
     (state) => state.adminReducer.classifiers || state.userReducer.classifiers
   );
   const [place, setPlace] = useState({});
+  const [type, setType] = useState("");
   const [topic, setTopic] = useState("");
   const [semester, setSemester] = useState("");
   const [teacher, setTeacher] = useState("");
@@ -72,14 +81,19 @@ export default function PracticeUploadForm(props) {
   const addPractice = () => {
     file.append("topic", topic);
     file.append("semester", semester);
-    file.append("placePractice", place);
     file.append("teacher", teacher);
-    file.append("director", director);
+    if (history.location.pathname === "/internship") {
+      file.append("placePractice", place);
+      file.append("director", director);
+    } else {
+      file.append("type", type);
+    }
 
     props.addFile(history.location.pathname, file, props.user.userId);
     props.handleClose();
   };
 
+  console.log(history.location);
   return (
     <Paper className={classes.paper}>
       {/* <Avatar className={classes.avatar}><LockOutlinedIcon /></Avatar> */}
@@ -95,7 +109,7 @@ export default function PracticeUploadForm(props) {
             // required
             fullWidth
             id="login"
-            label="Тема практики"
+            label="Тема"
             name="topic"
             autoComplete="topic"
             autoFocus
@@ -105,63 +119,97 @@ export default function PracticeUploadForm(props) {
           />
         </Grid>
         <Grid item xs={10}>
-          <InputLabel>Семестр</InputLabel>
-          <Select
-            value={semester}
-            onChange={(event) => setSemester(event.target.value)}
-            inputProps={{
-              name: "subject",
-            }}
-          >
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
-            <option value={5}>5</option>
-            <option value={6}>6</option>
-            <option value={7}>7</option>
-            <option value={8}>8</option>
-          </Select>
-        </Grid>
-
-        <Grid item xs={10}>
           <FormControl className={classes.formControl}>
-            <InputLabel>Место практики</InputLabel>
+            <InputLabel>Семестр</InputLabel>
             <Select
-              value={place}
-              defaultValue=""
-              onChange={(event) => setPlace(event.target.value)}
+              value={semester}
+              onChange={(event) => setSemester(event.target.value)}
+              input={<SelectInput />}
               inputProps={{
-                name: "specialty",
+                name: "subject",
               }}
             >
-              {classifiers.place.map((plac, index) => {
-                return (
-                  <option key={index} value={plac.placePracticeId}>
-                    {plac.companyName}
-                  </option>
-                );
-              })}
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={6}>6</option>
+              <option value={7}>7</option>
+              <option value={8}>8</option>
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={10}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            // required
-            fullWidth
-            value={director}
-            id="login"
-            label="Руководитель с места практики"
-            name="topic"
-            autoComplete="topic"
-            autoFocus
-            onChange={(event) => {
-              setDirector(event.target.value);
-            }}
-          />
-        </Grid>
+
+        {history.location.pathname === "/internship" && (
+          <>
+            <Grid item xs={10}>
+              <FormControl className={classes.formControl}>
+                <InputLabel>Место практики</InputLabel>
+                <Select
+                  value={place}
+                  defaultValue=""
+                  onChange={(event) => setPlace(event.target.value)}
+                  input={<SelectInput />}
+                  inputProps={{
+                    name: "specialty",
+                  }}
+                >
+                  {classifiers.place.map((plac, index) => {
+                    return (
+                      <option key={index} value={plac.placePracticeId}>
+                        {plac.companyName}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={10}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                // required
+                fullWidth
+                value={director}
+                id="login"
+                label="Руководитель с места практики"
+                name="topic"
+                autoComplete="topic"
+                autoFocus
+                onChange={(event) => {
+                  setDirector(event.target.value);
+                }}
+              />
+            </Grid>
+          </>
+        )}
+        {history.location.pathname === "/learning-activities" && (
+          <Grid item xs={10}>
+            <FormControl className={classes.formControl}>
+              <InputLabel>Тип</InputLabel>
+              <Select
+                value={type}
+                defaultValue=""
+                onChange={(event) => setType(event.target.value)}
+                input={<SelectInput />}
+                inputProps={{
+                  name: "type",
+                }}
+              >
+                {classifiers.learning.map((el, index) => {
+                  return (
+                    <option key={index} value={el}>
+                      {el}
+                    </option>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </Grid>
+        )}
+
         <Grid item xs={10}>
           <FormControl className={classes.formControl}>
             <InputLabel>Преподаватель</InputLabel>
@@ -169,6 +217,7 @@ export default function PracticeUploadForm(props) {
               value={teacher}
               defaultValue=""
               onChange={(event) => setTeacher(event.target.value)}
+              input={<SelectInput />}
               inputProps={{
                 name: "specialty",
               }}
@@ -183,23 +232,28 @@ export default function PracticeUploadForm(props) {
             </Select>
           </FormControl>
         </Grid>
-        <Input
-          type="file"
-          multiple
-          className={classes.input}
-          onChange={(event) => {
-            let formData = new FormData();
-            formData.append("file", event.target.files[0]);
-            setFile(formData);
-          }}
-        ></Input>
-        <Button
-          color="inherit"
-          variant="outlined"
-          onClick={() => addPractice()}
-        >
-          Загрузить
-        </Button>
+        <Grid container className={classes.input} direction="row">
+          <Grid item>
+            <Input
+              type="file"
+              multiple
+              onChange={(event) => {
+                let formData = new FormData();
+                formData.append("file", event.target.files[0]);
+                setFile(formData);
+              }}
+            />
+          </Grid>
+          <Grid item>
+            <Button
+              color="inherit"
+              variant="outlined"
+              onClick={() => addPractice()}
+            >
+              Загрузить
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </Paper>
   );

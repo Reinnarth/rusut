@@ -1,10 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import SingleSwitch from "../SingleContent/SingleSwitch";
+
+import {
+  downloadFile,
+  deleteOneContent,
+} from "../../../store/admin/adminActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function InternshipList(props) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const internships = useSelector((state) => state.adminReducer.content);
   return (
     <div>
@@ -32,16 +42,30 @@ export default function InternshipList(props) {
                 <Grid container>
                   <Grid item xs={4}>
                     <Typography color="inherit" component="h1">
-                      {internship.name}
+                      {internship.topic}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={6}>
                     <Typography color="inherit" component="h1">
-                      {internship.author}
+                      {internship.student}
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
-                    <SingleSwitch />
+                  <Grid item xs={2}>
+                    <Button
+                      type="button"
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() =>
+                        dispatch(
+                          deleteOneContent(
+                            internship.internshipId,
+                            history.location.pathname
+                          )
+                        )
+                      }
+                    >
+                      Удалить
+                    </Button>
                   </Grid>
                 </Grid>
               </Paper>

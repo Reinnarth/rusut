@@ -89,13 +89,11 @@ export default class App extends Component {
   ];
 
   componentDidMount() {
-    console.log("mount")
     this.props.getCurrentUser(localStorage.getItem("login"));
   }
 
   render() {
     const { user } = this.props;
-    // console.log(user);
     if (localStorage.getItem("token") === null) {
       return (
         <Switch>
@@ -126,11 +124,18 @@ export default class App extends Component {
               perform="home-page:visit"
               yes={(props) => {
                 return this.routes.map((route, index) => (
-                  <Route
-                    path={route.path}
-                    key={index}
-                    children={<route.page />}
-                  />
+                  <>
+                    <Route
+                      exact
+                      path="/"
+                      render={() => <Redirect to={route.semester} />}
+                    />
+                    <Route
+                      path={route.path}
+                      key={index}
+                      children={<route.page />}
+                    />
+                  </>
                 ));
               }}
               no={() => (
