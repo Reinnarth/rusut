@@ -8,11 +8,12 @@ export const signIn = (data) => (dispatch) => {
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("login", response.data.login);
+        localStorage.setItem("role", response.data.nameRole);
         window.history.go("/semester");
         dispatch({
           type: FETCH_LOGIN_SUCCESS,
           token: response.data.token,
-          role: response.data.role,
+          role: response.data.nameRole,
         });
       } else {
       }

@@ -40,7 +40,7 @@ export const uploadBook = (file, specialty, path) => (dispatch) => {
       headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
     })
     .then((response) => {
-      console.log(UPLOAD_BOOK_SUCCESS);
+
       dispatch({
         type: "pepega",
         payload: response.data,

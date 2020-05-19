@@ -100,6 +100,7 @@ function Header(props) {
                 onClick={() => {
                   localStorage.removeItem("token");
                   localStorage.removeItem("login");
+                  localStorage.removeItem("role");
                   window.history.go("/signin");
                 }}
               ></ExitToAppIcon>

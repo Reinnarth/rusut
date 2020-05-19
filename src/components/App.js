@@ -94,6 +94,7 @@ export default class App extends Component {
 
   render() {
     const { user } = this.props;
+    const role = localStorage.getItem("role");
     if (localStorage.getItem("token") === null) {
       return (
         <Switch>
@@ -116,32 +117,29 @@ export default class App extends Component {
               path="/signin"
               render={() => <Redirect to={route.semester} />}
             />
-            {this.routes.map((route, index) => (
-              <Route path={route.path} key={index} children={<route.page />} />
-            ))}
+            {role === "ROLE_USER" && (
+              <Route path="/" render={() => <Redirect to={route.wait} />} />
+            )}
+
             <Can
-              role={user.nameRole}
+              role={role}
               perform="home-page:visit"
               yes={(props) => {
                 return this.routes.map((route, index) => (
-                  <>
-                    <Route
-                      exact
-                      path="/"
-                      render={() => <Redirect to={route.semester} />}
-                    />
-                    <Route
-                      path={route.path}
-                      key={index}
-                      children={<route.page />}
-                    />
-                  </>
+                  <Route
+                    path={route.path}
+                    key={index}
+                    children={<route.page />}
+                  />
                 ));
               }}
               no={() => (
                 <Route path="/" render={() => <Redirect to={route.wait} />} />
               )}
             />
+            {this.routes.map((route, index) => (
+              <Route path={route.path} key={index} children={<route.page />} />
+            ))}
           </Switch>
         </div>
       );

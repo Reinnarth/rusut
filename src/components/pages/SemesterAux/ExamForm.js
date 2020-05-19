@@ -129,10 +129,9 @@ class ExamForm extends Component {
             <Grid
               container
               direction="row"
-              justify="center"
+              justify="space-between"
               alignItems="center"
-              spacing={6}
-              className={classes.gridRow}
+              spacing={1}
             >
               <Grid item xs={2}>
                 <FormControl>

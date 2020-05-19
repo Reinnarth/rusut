@@ -23,7 +23,6 @@ export default function libraryReducer(state = initialState, action) {
       };
 
     case UPLOAD_BOOK_SUCCESS:
-      console.log("reduxer don't crash pols")
       return {
         ...state,
       };

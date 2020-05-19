@@ -74,7 +74,6 @@ function LibraryPage(props) {
   const [bookList, setBookList] = useState([]);
 
   useEffect(() => {
-    console.log("hehe");
     getBooks(params);
   }, []);
 

@@ -109,7 +109,7 @@ function MenuAppBar(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Профиль</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
@@ -134,16 +134,17 @@ function MenuAppBar(props) {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Профиль</p>
       </MenuItem>
       <MenuItem
         onClick={() => {
           localStorage.removeItem("token");
           localStorage.removeItem("login");
+          localStorage.removeItem("role");
           window.history.go("/signin");
         }}
       >
-        Logout
+        Выйти
       </MenuItem>
     </Menu>
   );

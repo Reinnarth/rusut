@@ -72,13 +72,7 @@ class StgForm extends Component {
   addSTG = () => {
     const { user, postSTG } = this.props;
     const { subject, groups, semesters } = this.state;
-    // console.log(user.stg, { subject, groups, semesters });
-    // const newStg = lodash.concat(user.stg, {
-    //   subject: subject,
-    //   groups: groups,
-    //   semesters: semesters,
-    // });
-    // console.log(newStg);
+
     postSTG({ subject, groups, semesters });
     this.setState(initialState);
   };

@@ -93,7 +93,6 @@ export default function PracticeUploadForm(props) {
     props.handleClose();
   };
 
-  console.log(history.location);
   return (
     <Paper className={classes.paper}>
       {/* <Avatar className={classes.avatar}><LockOutlinedIcon /></Avatar> */}

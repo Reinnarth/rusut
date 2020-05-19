@@ -1,11 +1,14 @@
 import React from "react";
 import {
   Grid,
-  Button,
+  Input,
   FormControl,
   InputLabel,
   Typography,
   Select,
+  MenuItem,
+  Checkbox,
+  ListItemText,
 } from "@material-ui/core";
 
 export default function Teacher(props) {
@@ -25,6 +28,8 @@ export default function Teacher(props) {
                   : classifiers.positions[0]
               }
               onChange={handleChange}
+              input={<Input id="select-multiple-chip" />}
+              renderValue={(selected) => selected.join(", ")}
               inputProps={{
                 name: "namePositions",
                 id: "age-native-helper",
@@ -32,9 +37,12 @@ export default function Teacher(props) {
             >
               {classifiers.positions.map((el, index) => {
                 return (
-                  <option key={index} value={el}>
-                    {el}
-                  </option>
+                  <MenuItem key={index} value={el}>
+                    <Checkbox
+                      checked={newUser.namePositions.indexOf(el) > -1}
+                    />
+                    <ListItemText primary={el} />
+                  </MenuItem>
                 );
               })}
             </Select>
@@ -50,19 +58,22 @@ export default function Teacher(props) {
                   ? newUser.nameScienceDegrees
                   : classifiers.scienceDegrees[0]
               }
+              input={<Input id="select-multiple-chip" />}
+              renderValue={(selected) => selected.join(", ")}
               onChange={handleChange}
               inputProps={{
                 name: "nameScienceDegrees",
                 id: "age-native-helper",
               }}
             >
-              {classifiers.scienceDegrees.map((el, index) => {
-                return (
-                  <option key={index} value={el}>
-                    {el}
-                  </option>
-                );
-              })}
+              {classifiers.scienceDegrees.map((el, index) => (
+                <MenuItem key={index} value={el}>
+                  <Checkbox
+                    checked={newUser.nameScienceDegrees.indexOf(el) > -1}
+                  />
+                  <ListItemText primary={el} />
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
