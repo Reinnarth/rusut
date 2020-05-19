@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import {
-  Input,
+  IconButton,
   Button,
   DialogContent,
   TextField,
   Grid,
   Dialog,
-  Container,
+  Tooltip,
   Select,
   AppBar,
   Toolbar,
@@ -21,7 +21,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { withStyles } from "@material-ui/core/styles";
 import Can from "../Can";
 import ExamContainer from "../../containers/ExamContainer/ExamContainer";
-import StudentView from "./SemesterAux/StudentView";
+import PaginationControlled from "../Shared/Pagination/Pagination";
 import UploadFileForm from "../Shared/UploadFileForm/UploadFileForm";
 
 const styles = (theme) => ({
@@ -136,7 +136,10 @@ function LibraryPage(props) {
                   fullWidth
                   placeholder="Search by name"
                   onChange={(event) => {
-                    setParams({ [event.target.name]: event.target.value });
+                    setParams({
+                      ...params,
+                      [event.target.name]: event.target.value,
+                    });
                   }}
                   InputProps={{
                     name: "search",
@@ -145,6 +148,15 @@ function LibraryPage(props) {
                   }}
                 />
               </Grid>
+              <Tooltip title="Найти">
+                <IconButton
+                  onClick={() => {
+                    getBooks(params);
+                  }}
+                >
+                  <SearchIcon className={classes.block} color="inherit" />
+                </IconButton>
+              </Tooltip>
               <Grid item xs>
                 <Can
                   role={user.nameRole}
@@ -190,6 +202,14 @@ function LibraryPage(props) {
           {/* {!loading && <></>} */}
 
           <>{list}</>
+        </div>
+        <div className={classes.paginationWrapper}>
+          <PaginationControlled
+            params={params}
+            setParams={setParams}
+            getContentArray={getBooks}
+            pagecount={Math.ceil(props.amount / 25)}
+          />
         </div>
       </Paper>
     );

@@ -53,7 +53,7 @@ export const addFile = (path, file, id) => (dispatch) => {
 
 export const setMark = (path, data, id) => (dispatch) => {
   API.axios
-    .put(`/teacher${path}/${id}`, data)
+    .put(`/teacher${path}/${id}`, "", { params: data })
     .then((response) => {
       dispatch({
         type: ADD_FILE_SUCCESS,

@@ -26,6 +26,8 @@ const styles = (theme) => ({
     justifyContent: "space-between",
     color: theme.palette.text.primary,
   },
+  gridColumn: { width: "40.5rem" },
+  gridRow: { width: "40.5rem" },
   buttonRow: { textAlign: "center", justifyContent: "center" },
   searchBar: {
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
@@ -45,11 +47,6 @@ const styles = (theme) => ({
     marginRight: theme.spacing(1),
   },
 
-  paginationWrapper: {
-    display: "flex",
-    textAlign: "center",
-    justifyContent: "center",
-  },
 });
 
 class ExamForm extends Component {
@@ -60,7 +57,7 @@ class ExamForm extends Component {
       hours: props.exam ? props.exam.hours : null,
       group: props.exam ? props.exam.group : null,
       subject: props.exam ? props.exam.subject : null,
-      semester: props.exam ? props.exam.semester : null,
+      semester: props.exam ? props.exam.semester : "Экзамен",
       students: props.exam ? props.exam.students : [],
     };
   }
@@ -128,15 +125,17 @@ class ExamForm extends Component {
             justify="center"
             alignItems="center"
             spacing={1}
+            className={classes.gridColumn}
           >
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justify="center"
               alignItems="center"
-              spacing={1}
+              spacing={6}
+              className={classes.gridRow}
             >
-              <Grid item xs={2}>
+              <Grid item xs={2} justify="center" alignItems="center">
                 <FormControl>
                   <InputLabel>Формат аттестации</InputLabel>
                   <Select
@@ -162,7 +161,7 @@ class ExamForm extends Component {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={2}>
+              <Grid item xs={10} justify="center" alignItems="center">
                 <FormControl>
                   <InputLabel>Предмет</InputLabel>
                   <Select
@@ -182,65 +181,75 @@ class ExamForm extends Component {
                   </Select>
                 </FormControl>
               </Grid>
-              {subject && (
-                <>
-                  <Grid item xs={2}>
-                    <FormControl>
-                      <InputLabel>Группа</InputLabel>
-                      <Select
-                        className={classes.selectEmpty}
-                        value={group}
-                        autoWidth={true}
-                        onChange={this.handleChange}
-                        inputProps={{
-                          name: "group",
-                        }}
-                      >
-                        {user.stg
-                          .find((el) => el.subject === subject)
-                          .groups.map((group, index) => (
-                            <option key={index} value={group}>
-                              {group}
-                            </option>
-                          ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <FormControl>
-                      <InputLabel>Семестр</InputLabel>
-                      <Select
-                        className={classes.selectEmpty}
-                        autoWidth={true}
-                        value={semester}
-                        onChange={this.handleChange}
-                        inputProps={{
-                          name: "semester",
-                        }}
-                      >
-                        {user.stg
-                          .find((el) => el.subject === subject)
-                          .semesters.map((semester, index) => (
+            </Grid>
+
+            {subject && (
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
+                spacing={1}
+              >
+                <Grid item xs={1}>
+                  <FormControl>
+                    <InputLabel>Группа</InputLabel>
+                    <Select
+                      className={classes.selectEmpty}
+                      value={group}
+                      autoWidth={true}
+                      onChange={this.handleChange}
+                      inputProps={{
+                        name: "group",
+                      }}
+                    >
+                      {user.stg
+                        .find((el) => el.subject === subject)
+                        .groups.map((group, index) => (
+                          <option key={index} value={group}>
+                            {group}
+                          </option>
+                        ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={1}>
+                  <FormControl>
+                    <InputLabel>Семестр</InputLabel>
+                    <Select
+                      className={classes.selectEmpty}
+                      autoWidth={true}
+                      value={semester}
+                      onChange={this.handleChange}
+                      inputProps={{
+                        name: "semester",
+                      }}
+                    >
+                      {user.stg
+                        .filter((el) => el.subject === subject)
+                        .map((el) =>
+                          el.semesters.map((semester, index) => (
                             <option key={index} value={semester}>
                               {semester}
                             </option>
-                          ))}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <FormControl>
-                      <InputLabel>Кол-во часов</InputLabel>
-                      <Input
-                        value={hours}
-                        onChange={this.handleChange}
-                        name="hours"
-                      />
-                    </FormControl>
-                  </Grid>
-                </>
-              )}
-            </Grid>
+                          ))
+                        )}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={2}>
+                  <FormControl>
+                    <InputLabel>Кол-во часов</InputLabel>
+                    <Input
+                      value={hours}
+                      onChange={this.handleChange}
+                      name="hours"
+                    />
+                  </FormControl>
+                </Grid>
+              </Grid>
+            )}
+
             {group && students && (
               <>
                 {students.map((student, index) => (

@@ -78,10 +78,6 @@ function MenuAppBar(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  useEffect(() => {
-    props.getCurrentUser(localStorage.getItem("login"));
-  }, []);
-
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 

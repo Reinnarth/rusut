@@ -12,7 +12,7 @@ import {
   InputLabel,
   Select,
   FormControl,
-  FormControlLabel,
+  InputBase,
   Typography,
   Paper,
   Link,
@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import lodash from "lodash";
 import * as yup from "yup";
 
+import { SelectInput } from "../../Shared/SelectInput/SelectInput";
 import { makeStyles } from "@material-ui/core/styles";
 
 const uploadSchema = yup.object().shape({
@@ -45,6 +46,13 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
+  formControl: {
+    margin: 0,
+    fullWidth: true,
+    minWidth: "8rem",
+    wrap: "wrap",
+  },
+
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -165,6 +173,9 @@ export default function UpdateFileForm(props) {
                   value={specialty}
                   defaultValue=""
                   onChange={(event) => setSpecialty(event.target.value)}
+               
+                  multiline={true}
+                  input={<SelectInput />}
                   inputProps={{
                     name: "specialty",
                   }}

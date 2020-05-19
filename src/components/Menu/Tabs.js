@@ -46,10 +46,7 @@ function CenteredTabs(props) {
               value={routes.learningActivities}
               label="Учебная деятельность"
             />
-              <Tab
-              value={routes.practice}
-              label="Практики"
-            />
+            <Tab value={routes.practice} label="Практики" />
             <Can
               role={user.nameRole}
               perform="admin-page:visit"
@@ -70,50 +67,6 @@ function CenteredTabs(props) {
         )}
         no={() => <></>}
       />
-      {/* <Can
-        role={user.nameRole}
-        perform="admin-page:visit"
-        yes={() => (
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-          >
-            <Tab value={routes.semester} label="Семестр" />
-            <Tab value={routes.library} label="Библиотека" />
-            <Tab
-              value={routes.learningActivities}
-              label="Learning activities"
-            />
-            <Tab value={`${routes.admin}/users`} label="Admin Panel" />
-          </Tabs>
-        )}
-        no={() => <></>}
-      />
-      <Can
-        role={user.nameRole}
-        perform="stg-page:visit"
-        yes={() => (
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-          >
-            <Tab value={routes.semester} label="Семестр" />
-            <Tab value={routes.library} label="Библиотека" />
-            <Tab
-              value={routes.learningActivities}
-              label="Learning activities"
-            />
-            <Tab value={routes.stg} label="Группы" />
-          </Tabs>
-        )}
-        no={() => <></>}
-      /> */}
     </Paper>
   );
 }

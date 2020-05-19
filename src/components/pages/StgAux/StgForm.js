@@ -12,7 +12,8 @@ import {
   Input,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import lodash from "lodash";
+
+import { SelectInput } from "../../Shared/SelectInput/SelectInput";
 
 const styles = (theme) => ({
   formControl: {
@@ -112,6 +113,8 @@ class StgForm extends Component {
             <Select
               value={subject}
               onChange={this.handleChange}
+              multiline={true}
+              input={<SelectInput />}
               inputProps={{
                 name: "subject",
               }}
@@ -135,6 +138,8 @@ class StgForm extends Component {
                 <Select
                   value={specialty}
                   onChange={this.handleChange}
+                  multiline={true}
+                  input={<SelectInput />}
                   inputProps={{
                     name: "specialty",
                   }}

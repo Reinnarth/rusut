@@ -73,7 +73,10 @@ class StudentView extends Component {
 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
-    this.props.getMyExams({ semester:event.target.value}, this.props.user.userId);
+    this.props.getMyExams(
+      { semester: event.target.value },
+      this.props.user.userId
+    );
   };
 
   render() {
@@ -87,7 +90,7 @@ class StudentView extends Component {
             <Grid item xs={12}>
               <Grid container className={classes.contentWrapper}>
                 <Grid item xs={3}>
-                  <Typography component="h1">{exam.type}</Typography>
+                  <Typography component="h1">{exam.typeExam}</Typography>
                 </Grid>
                 <Grid item xs={5}>
                   <Typography component="h1">{exam.subject}</Typography>

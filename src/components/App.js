@@ -8,9 +8,11 @@ import LibraryContainer from "../containers/LibraryContainer/LibraryContainer";
 import LearningActivitiesPage from "./pages/LearningActivitiesPage";
 import StgPage from "./pages/StgPage";
 import PracticePage from "./pages/PracticePage";
+import WaitPage from "./pages/WaitPage";
 import ProfilePageContainer from "../containers/ProfileContainer/ProfilePageContainer";
 import AdminContainer from "../containers/AdminContainer/AdminContainer";
 import MenuContainer from "../containers/MenuContainer/MenuContainer.js";
+import Can from "./Can";
 import * as route from "../global/routes";
 
 export default class App extends Component {
@@ -76,9 +78,24 @@ export default class App extends Component {
         </>
       ),
     },
+    {
+      path: route.wait,
+      page: () => (
+        <>
+          <MenuContainer /> <WaitPage />
+        </>
+      ),
+    },
   ];
-  
+
+  componentDidMount() {
+    console.log("mount")
+    this.props.getCurrentUser(localStorage.getItem("login"));
+  }
+
   render() {
+    const { user } = this.props;
+    // console.log(user);
     if (localStorage.getItem("token") === null) {
       return (
         <Switch>
@@ -95,24 +112,31 @@ export default class App extends Component {
             <Route
               exact
               path="/"
-              render={() => <Redirect to={"/semester"} />}
+              render={() => <Redirect to={route.semester} />}
             />
             <Route
               path="/signin"
-              render={() => <Redirect to={"/semester"} />}
+              render={() => <Redirect to={route.semester} />}
             />
-
             {this.routes.map((route, index) => (
               <Route path={route.path} key={index} children={<route.page />} />
             ))}
-            {/* 
-            <Route path={route.semester} component={SemesterPage} />
-            <Route path={route.library} component={LibraryPage} />
-            <Route
-              path={route.learningActivities}
-              component={LearningActivitiesPage}
+            <Can
+              role={user.nameRole}
+              perform="home-page:visit"
+              yes={(props) => {
+                return this.routes.map((route, index) => (
+                  <Route
+                    path={route.path}
+                    key={index}
+                    children={<route.page />}
+                  />
+                ));
+              }}
+              no={() => (
+                <Route path="/" render={() => <Redirect to={route.wait} />} />
+              )}
             />
-            <Route path={route.admin} component={AdminPanel} /> */}
           </Switch>
         </div>
       );

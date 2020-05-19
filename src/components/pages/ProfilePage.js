@@ -12,6 +12,8 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
+import Can from "../Can";
+
 const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -19,6 +21,7 @@ const styles = (theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center"
   },
   nameContainer: {
     marginTop: theme.spacing(1),
@@ -266,6 +269,41 @@ class ProfilePage extends Component {
                 <Grid item xs={12}>
                   <Typography>{email}</Typography>
                 </Grid>
+                <Can
+                  role={user.nameRole}
+                  perform="practice-page:add"
+                  yes={(props) => (
+                    <>
+                      <Grid item xs={12}>
+                        <Typography>
+                          Специальность: {user.nameSpecialty}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Typography>Группа: {user.numberGroup}</Typography>
+                      </Grid>
+                    </>
+                  )}
+                  no={() => <></>}
+                />
+                <Can
+                  role={user.nameRole}
+                  perform="practice-page:setMark"
+                  yes={(props) => (
+                    <>
+                      <Grid item xs={12}>
+                        <Typography component="span">Должности:</Typography>
+
+                        {user.namePositions.map((el, ind) => (
+                          <Typography key={ind} component="span">
+                            {el}
+                          </Typography>
+                        ))}
+                      </Grid>
+                     </>
+                  )}
+                  no={() => <></>}
+                />
               </Grid>
               <Grid className={classes.nameContainer} container spacing={2}>
                 <Button

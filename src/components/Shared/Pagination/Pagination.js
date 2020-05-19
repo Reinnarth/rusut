@@ -14,14 +14,21 @@ const useStyles = makeStyles((theme) => ({
 export default function PaginationControlled(props) {
   const classes = useStyles();
   const [page, setPage] = React.useState(1);
-  
+
   const handleChange = async (event, value) => {
     setPage(value);
 
-    props.getContentArray(`admin/${props.tab}`, {
-      ...props.params,
-      offset: (value - 1) * 25,
-    });
+    if (props.tab) {
+      props.getContentArray(`admin/${props.tab}`, {
+        ...props.params,
+        offset: (value - 1) * 25,
+      });
+    } else {
+      props.getContentArray({
+        ...props.params,
+        offset: (value - 1) * 25,
+      });
+    }
   };
 
   return (

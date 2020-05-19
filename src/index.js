@@ -8,10 +8,10 @@ import red from "@material-ui/core/colors/red";
 
 import store from "./store";
 
-import App from "./components/App";
+import AppContainer from "./containers/AppContainer/AppContainer";
 
 const theme = createMuiTheme({
-  fontFamily: 'Roboto',
+  fontFamily: "Roboto",
   palette: {
     primary: indigo,
     secondary: red,
@@ -26,7 +26,7 @@ ReactDOM.render(
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <Router>
-          <App />
+          <AppContainer />
         </Router>
       </ThemeProvider>
     </React.StrictMode>
