@@ -34,13 +34,7 @@ export default function PaginationControlled(props) {
   return (
     <div className={classes.root}>
       <Typography>Страница: {page}</Typography>
-      <Pagination
-        showFirstButton
-        showLastButton
-        count={props.pagecount}
-        page={page}
-        onChange={handleChange}
-      />
+      <Pagination count={props.pagecount} page={page} onChange={handleChange} />
     </div>
   );
 }

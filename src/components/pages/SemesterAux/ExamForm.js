@@ -121,7 +121,7 @@ class ExamForm extends Component {
           <Grid
             container
             direction="column"
-            justify="center"
+            justify="space-between"
             alignItems="center"
             spacing={1}
             className={classes.gridColumn}
@@ -133,7 +133,8 @@ class ExamForm extends Component {
               alignItems="center"
               spacing={1}
             >
-              <Grid item xs={2}>
+                <Grid item xs={2}></Grid>
+              <Grid item xs={4}>
                 <FormControl>
                   <InputLabel>Формат аттестации</InputLabel>
                   <Select
@@ -159,7 +160,7 @@ class ExamForm extends Component {
                 </FormControl>
               </Grid>
 
-              <Grid item xs={10}>
+              <Grid item xs={6}>
                 <FormControl>
                   <InputLabel>Предмет</InputLabel>
                   <Select

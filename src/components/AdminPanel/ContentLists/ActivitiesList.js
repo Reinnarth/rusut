@@ -34,7 +34,7 @@ export default function ActivitiesList(props) {
   return (
     <div>
       {activities.map((activity) => {
-        console.log(activity.id)
+        console.log(activity.id);
         return (
           <Grid container>
             <Grid item xs={12}>
@@ -55,14 +55,16 @@ export default function ActivitiesList(props) {
                       type="button"
                       variant="outlined"
                       color="secondary"
-                      onClick={() =>
-                        dispatch(
-                          deleteOneContent(
-                            activity.id,
-                            history.location.pathname
-                          )
-                        )
-                      }
+                      onClick={() => {
+                        if (window.confirm("Вы уверены?")) {
+                          dispatch(
+                            deleteOneContent(
+                              activity.id,
+                              history.location.pathname
+                            )
+                          );
+                        }
+                      }}
                     >
                       Удалить
                     </Button>

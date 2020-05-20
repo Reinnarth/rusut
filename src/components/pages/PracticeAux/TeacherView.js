@@ -99,13 +99,16 @@ class TeacherView extends Component {
           <Grid container key={index} className={classes.container}>
             <Grid item xs={12}>
               <Grid container className={classes.contentWrapper}>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   <Typography component="h1">Тема: {upload.topic}</Typography>
                 </Grid>
                 <Grid item xs={3}>
                   <Typography component="h1">{upload.student}</Typography>
                 </Grid>
-                <Grid component="h1" item xs={3}>
+                <Grid item xs={1}>
+                  <Typography component="h1">{upload.mark}</Typography>
+                </Grid>
+                <Grid component="h1" item xs={2}>
                   <Button
                     color="primary"
                     variant="outlined"
@@ -116,15 +119,12 @@ class TeacherView extends Component {
                     Оценить
                   </Button>
                 </Grid>
-                <Grid component="h1" item xs={3}>
+                <Grid component="h1" item xs={2}>
                   <Button
                     color="primary"
                     variant="outlined"
                     onClick={() =>
-                      downloadFile(
-                        history.location.pathname,
-                        upload.id
-                      )
+                      downloadFile(history.location.pathname, upload.id)
                     }
                   >
                     Скачать
@@ -155,7 +155,7 @@ class TeacherView extends Component {
               aria-describedby="alert-dialog-description"
             >
               <DialogContent>
-                <Grid item xs={3}>
+                <Grid item xs={6}>
                   <TextField
                     variant="outlined"
                     margin="normal"
@@ -167,7 +167,7 @@ class TeacherView extends Component {
                     label="Оценка"
                   ></TextField>
                 </Grid>{" "}
-                <Grid item xs={3}>
+                <Grid item xs={6}>
                   <Button
                     color="primary"
                     variant="outlined"

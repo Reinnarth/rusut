@@ -13,6 +13,7 @@ const mapStateToProps = (state) => ({
   loading: state.viewReducer.loading,
   user: state.userReducer.user,
   books: state.libraryReducer.books,
+  amount: state.libraryReducer.amount,
   book: state.libraryReducer.book,
   classifiers: state.userReducer.classifiers,
 });

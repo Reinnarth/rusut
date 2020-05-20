@@ -117,7 +117,7 @@ function Content(props) {
             <Grid item xs>
               <TextField
                 fullWidth
-                placeholder="Search by name"
+                placeholder="Поиск"
                 onChange={handleChange}
                 InputProps={{
                   name: "search",

@@ -66,14 +66,16 @@ export default function BooksList(props) {
                       type="button"
                       variant="outlined"
                       color="secondary"
-                      onClick={() =>
-                        dispatch(
-                          deleteOneContent(
-                            book.libraryId,
-                            history.location.pathname
-                          )
-                        )
-                      }
+                      onClick={() => {
+                        if (window.confirm("Вы уверены?")) {
+                          dispatch(
+                            deleteOneContent(
+                              book.libraryId,
+                              history.location.pathname
+                            )
+                          );
+                        }
+                      }}
                     >
                       Удалить
                     </Button>

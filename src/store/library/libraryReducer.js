@@ -5,6 +5,7 @@ import {
 } from "./libraryConstants";
 
 const initialState = {
+  amount: null,
   books: [],
   book: {},
 };
@@ -14,7 +15,8 @@ export default function libraryReducer(state = initialState, action) {
     case FETCH_BOOKS_SUCCESS:
       return {
         ...state,
-        books: action.payload,
+        books: action.payload.content,
+        amount: action.payload.count,
       };
     case FETCH_BOOK_SUCCESS:
       return {

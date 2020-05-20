@@ -58,14 +58,16 @@ export default function PracticePlaces(props) {
                       type="button"
                       variant="outlined"
                       color="secondary"
-                      onClick={() =>
-                        dispatch(
-                          deleteOneContent(
-                            place.placePracticeId,
-                            history.location.pathname
-                          )
-                        )
-                      }
+                      onClick={() => {
+                        if (window.confirm("Вы уверены?")) {
+                          dispatch(
+                            deleteOneContent(
+                              place.placePracticeId,
+                              history.location.pathname
+                            )
+                          );
+                        }
+                      }}
                     >
                       Удалить
                     </Button>

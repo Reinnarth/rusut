@@ -118,7 +118,13 @@ export default class App extends Component {
               path="/signin"
               render={() => <Redirect to={route.semester} />}
             />
-   
+            {/* {role === "ROLE_ADMIN" && (
+              <Route path="/" render={() => <Redirect to={`${route.admin}/users`} />} />
+            )}
+            {role === "ROLE_USER" && (
+              <Route path="/" render={() => <Redirect to={route.admin} />} />
+            )} */}
+
             <Can
               role={role}
               perform="home-page:visit"

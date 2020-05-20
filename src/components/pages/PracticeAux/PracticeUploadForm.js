@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     fullWidth: true,
     minWidth: "10rem",
     wrap: "wrap",
+    marginTop: theme.spacing(1),
   },
   input: {
     marginTop: theme.spacing(2),
@@ -152,6 +153,7 @@ export default function PracticeUploadForm(props) {
                   input={<SelectInput />}
                   inputProps={{
                     name: "specialty",
+                    
                   }}
                 >
                   {classifiers.place.map((plac, index) => {

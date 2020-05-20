@@ -66,14 +66,16 @@ export default function UsersList(props) {
                     <Button
                       color="secondary"
                       variant="outlined"
-                      onClick={() =>
-                        dispatch(
-                          deleteOneContent(
-                            user.userId,
-                            history.location.pathname
-                          )
-                        )
-                      }
+                      onClick={() => {
+                        if (window.confirm("Вы уверены?")) {
+                          dispatch(
+                            deleteOneContent(
+                              user.userId,
+                              history.location.pathname
+                            )
+                          );
+                        }
+                      }}
                     >
                       Удалить
                     </Button>

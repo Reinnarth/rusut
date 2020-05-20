@@ -147,21 +147,6 @@ class TeacherView extends Component {
                 spacing={2}
                 alignItems="center"
               >
-                <Grid item>
-                  <SearchIcon className={classes.block} color="inherit" />
-                </Grid>
-                <Grid item xs>
-                  <TextField
-                    fullWidth
-                    placeholder="Search by name"
-                    onChange={this.handleChange}
-                    InputProps={{
-                      name: "search",
-                      disableUnderline: true,
-                      className: classes.searchInput,
-                    }}
-                  />
-                </Grid>
                 <Grid item xs>
                   <Button
                     color="primary"

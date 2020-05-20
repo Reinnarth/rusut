@@ -196,7 +196,11 @@ export default class SingleUser extends Component {
             type="button"
             variant="outlined"
             color="secondary"
-            onClick={() => deleteOneContent(newUser.userId, `${location.path}`)}
+            onClick={() => {
+              if (window.confirm("Вы уверены?")) {
+                deleteOneContent(newUser.userId, `${location.path}`);
+              }
+            }}
           >
             Удалить
           </Button>

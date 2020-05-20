@@ -32,7 +32,7 @@ export default function InternshipList(props) {
   const history = useHistory();
 
   const internships = useSelector((state) => state.adminReducer.content);
-  console.log("INTERNSHIPS")
+  console.log("INTERNSHIPS");
   return (
     <div>
       {internships.map((internship) => {
@@ -57,14 +57,16 @@ export default function InternshipList(props) {
                       type="button"
                       variant="outlined"
                       color="secondary"
-                      onClick={() =>
-                        dispatch(
-                          deleteOneContent(
-                            internship.id,
-                            history.location.pathname
-                          )
-                        )
-                      }
+                      onClick={() => {
+                        if (window.confirm("Вы уверены?")) {
+                          dispatch(
+                            deleteOneContent(
+                              internship.id,
+                              history.location.pathname
+                            )
+                          );
+                        }
+                      }}
                     >
                       Удалить
                     </Button>

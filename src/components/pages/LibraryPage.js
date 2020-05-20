@@ -80,7 +80,7 @@ function LibraryPage(props) {
   }, []);
 
   useEffect(() => {
-    setBookList(books.content);
+    setBookList(books);
   }, [books]);
 
   if (!loading) {
@@ -138,7 +138,7 @@ function LibraryPage(props) {
               <Grid item xs>
                 <TextField
                   fullWidth
-                  placeholder="Search by name"
+                  placeholder="Поиск"
                   onChange={(event) => {
                     setParams({
                       ...params,
