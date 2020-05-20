@@ -12,7 +12,6 @@ export const SelectInput = withStyles((theme) => ({
     borderRadius: 4,
     position: "relative",
     backgroundColor: theme.palette.background.paper,
-    opacity: '0.1',
     border: "1px solid #ced4da",
     fontSize: 16,
     padding: "10px 26px 10px 12px",
