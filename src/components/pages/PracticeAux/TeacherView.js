@@ -123,7 +123,7 @@ class TeacherView extends Component {
                     onClick={() =>
                       downloadFile(
                         history.location.pathname,
-                        upload.internshipId
+                        upload.id
                       )
                     }
                   >
@@ -175,7 +175,7 @@ class TeacherView extends Component {
                       setMark(
                         history.location.pathname,
                         { mark: mark },
-                        upload.internshipId
+                        upload.id
                       );
                       this.setState({ showConstructor: false });
                     }}

@@ -32,9 +32,11 @@ export default function InternshipList(props) {
   const history = useHistory();
 
   const internships = useSelector((state) => state.adminReducer.content);
+  console.log("INTERNSHIPS")
   return (
     <div>
       {internships.map((internship) => {
+        console.log(internship.id);
         return (
           <Grid container>
             <Grid item xs={12}>
@@ -58,7 +60,7 @@ export default function InternshipList(props) {
                       onClick={() =>
                         dispatch(
                           deleteOneContent(
-                            internship.internshipId,
+                            internship.id,
                             history.location.pathname
                           )
                         )

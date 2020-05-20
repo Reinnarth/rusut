@@ -6,13 +6,13 @@ import InputBase from "@material-ui/core/InputBase";
 export const SelectInput = withStyles((theme) => ({
   root: {
     "label + &": {
-      marginTop: theme.spacing(3),
     },
   },
   input: {
     borderRadius: 4,
     position: "relative",
     backgroundColor: theme.palette.background.paper,
+    opacity: '0.1',
     border: "1px solid #ced4da",
     fontSize: 16,
     padding: "10px 26px 10px 12px",

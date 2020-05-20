@@ -107,7 +107,7 @@ function Content(props) {
         className={classes.searchBar}
         position="static"
         color="default"
-        elevation={0}
+        elevation={1}
       >
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
@@ -136,7 +136,7 @@ function Content(props) {
                   Добавить
                 </Button>
               </Grid>
-            )}{" "}
+            )}
             {tab === "teachers" && (
               <Grid item xs>
                 <NativeSelect

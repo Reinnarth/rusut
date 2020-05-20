@@ -71,7 +71,9 @@ function LibraryPage(props) {
 
   const [params, setParams] = useState({ offset: 0 });
   const [open, setOpen] = useState(false);
+  const [openInfo, setOpenInfo] = useState(false);
   const [bookList, setBookList] = useState([]);
+  const [book, setBook] = useState({});
 
   useEffect(() => {
     getBooks(params);
@@ -97,7 +99,10 @@ function LibraryPage(props) {
                 <Button
                   color="primary"
                   variant="outlined"
-                  // onClick={() => setOpen(true)}
+                  onClick={() => {
+                    setOpenInfo(true);
+                    setBook(book);
+                  }}
                 >
                   Подробнее
                 </Button>
@@ -196,9 +201,44 @@ function LibraryPage(props) {
               ></UploadFileForm>
             </DialogContent>
           </Dialog>
-          {/* {loading && <CircularProgress />} */}
 
-          {/* {!loading && <></>} */}
+          <Dialog
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={openInfo}
+            onClose={() => setOpenInfo(false)}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <DialogContent>
+              <Grid>
+                <Typography>Название: {book.name}</Typography>
+                <Typography component="span">Авторы: </Typography>
+                {book.authors.map((el, index) => (
+                  <Typography key="index">{el}</Typography>
+                ))}
+                <Button
+                  type="button"
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => this.setState({ editFlag: true })}
+                >
+                  Изменить
+                </Button>
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => downloadFile(book.libraryId)}
+                >
+                  Скачать
+                </Button>
+              </Grid>
+            </DialogContent>
+          </Dialog>
 
           <>{list}</>
         </div>

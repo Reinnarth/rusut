@@ -34,6 +34,7 @@ export default function ActivitiesList(props) {
   return (
     <div>
       {activities.map((activity) => {
+        console.log(activity.id)
         return (
           <Grid container>
             <Grid item xs={12}>
@@ -57,7 +58,7 @@ export default function ActivitiesList(props) {
                       onClick={() =>
                         dispatch(
                           deleteOneContent(
-                            activity.internshipId,
+                            activity.id,
                             history.location.pathname
                           )
                         )
