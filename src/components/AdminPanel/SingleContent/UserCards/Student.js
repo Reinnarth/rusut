@@ -42,37 +42,36 @@ export default function Student({
             </Select>
           </FormControl>
         </Grid>
-        {user.nameRole === "ROLE_STUDENT" && (
-          <Grid item xs={10}>
-            <FormControl>
-              <InputLabel>Группа</InputLabel>
-              <Select
-                value={
-                  newUser.numberGroup
-                    ? newUser.numberGroup
-                    : classifiers.specialty.find(
-                        (el) => el.nameSpecialty === newUser.nameSpecialty
-                      ).numberGroup[0]
-                }
-                onChange={handleChange}
-                inputProps={{
-                  name: "numberGroup",
-                  id: "age-native-helper",
-                }}
-              >
-                {classifiers.specialty
-                  .find((el) => el.nameSpecialty === newUser.nameSpecialty)
-                  .numberGroup.map((el, index) => {
-                    return (
-                      <option key={index} value={el}>
-                        {el}
-                      </option>
-                    );
-                  })}
-              </Select>
-            </FormControl>
-          </Grid>
-        )}
+
+        <Grid item xs={10}>
+          <FormControl>
+            <InputLabel>Группа</InputLabel>
+            <Select
+              value={
+                newUser.numberGroup
+                  ? newUser.numberGroup
+                  : classifiers.specialty.find(
+                      (el) => el.nameSpecialty === newUser.nameSpecialty
+                    ).numberGroup[0]
+              }
+              onChange={handleChange}
+              inputProps={{
+                name: "numberGroup",
+                id: "age-native-helper",
+              }}
+            >
+              {classifiers.specialty
+                .find((el) => el.nameSpecialty === newUser.nameSpecialty)
+                .numberGroup.map((el, index) => {
+                  return (
+                    <option key={index} value={el}>
+                      {el}
+                    </option>
+                  );
+                })}
+            </Select>
+          </FormControl>
+        </Grid>
       </>
     );
   } else {

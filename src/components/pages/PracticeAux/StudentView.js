@@ -102,7 +102,7 @@ class StudentView extends Component {
                     onClick={() =>
                       downloadFile(
                         history.location.pathname,
-                        upload.internshipId
+                        upload.id
                       )
                     }
                   >

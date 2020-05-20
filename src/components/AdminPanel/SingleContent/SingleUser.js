@@ -42,13 +42,13 @@ export default class SingleUser extends Component {
   }
 
   handleChange = (event) => {
-    const { classifiers } = this.state;
+    const { classifiers, newUser } = this.state;
     switch (event.target.name) {
       case "nameRole":
         if (event.target.value === "ROLE_STUDENT") {
           this.setState({
             newUser: {
-              ...this.state.newUser,
+              ...newUser,
               [event.target.name]: event.target.value,
               nameSpecialty: classifiers.specialty[0].nameSpecialty,
             },
@@ -56,11 +56,22 @@ export default class SingleUser extends Component {
         } else if (event.target.value === "ROLE_TEACHER") {
           this.setState({
             newUser: {
-              ...this.state.newUser,
+              ...newUser,
               [event.target.name]: event.target.value,
               namePositions: [],
               nameScienceDegrees: [],
             },
+          });
+        } else {
+          const aux = newUser;
+          delete aux.namePositions;
+          delete aux.nameScienceDegrees;
+          delete aux.nameSpecialty;
+          delete aux.numberGroup;
+          delete aux.numberBook;
+          delete aux.entryDate;
+          this.setState({
+            newUser: { ...aux, [event.target.name]: event.target.value },
           });
         }
 
@@ -68,7 +79,7 @@ export default class SingleUser extends Component {
       default:
         this.setState({
           newUser: {
-            ...this.state.newUser,
+            ...newUser,
             [event.target.name]: event.target.value,
           },
         });
@@ -82,13 +93,13 @@ export default class SingleUser extends Component {
     const { updateContent, tab, handleClose } = this.props;
 
     await updateContent(`/admin/${tab}`, newUser);
-    handleClose()
+    handleClose();
   };
 
   render() {
     const { newUser, editFlag, classifiers } = this.state;
     const { deleteOneContent, location, user } = this.props;
-
+    console.log(newUser);
     if (editFlag) {
       return (
         <form onSubmit={this.handleSubmit}>

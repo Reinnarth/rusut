@@ -58,7 +58,7 @@ class StudentView extends Component {
   state = {
     user: {},
     exam: null,
-    semester: "1",
+    semester: 1,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -97,11 +97,10 @@ class StudentView extends Component {
               <InputLabel>Семестр</InputLabel>
               <Select
                 value={semester}
-                name="semester"
                 onChange={this.handleChange}
                 defaultValue="1"
                 inputProps={{
-                  name: "subject",
+                  name: "semester",
                 }}
               >
                 <option value={1}>1</option>

@@ -95,6 +95,7 @@ export default class App extends Component {
   render() {
     const { user } = this.props;
     const role = localStorage.getItem("role");
+
     if (localStorage.getItem("token") === null) {
       return (
         <Switch>
@@ -117,10 +118,7 @@ export default class App extends Component {
               path="/signin"
               render={() => <Redirect to={route.semester} />}
             />
-            {role === "ROLE_USER" && (
-              <Route path="/" render={() => <Redirect to={route.wait} />} />
-            )}
-
+   
             <Can
               role={role}
               perform="home-page:visit"
