@@ -201,44 +201,45 @@ function LibraryPage(props) {
               ></UploadFileForm>
             </DialogContent>
           </Dialog>
-
-          <Dialog
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            className={classes.modal}
-            open={openInfo}
-            onClose={() => setOpenInfo(false)}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <DialogContent>
-              <Grid>
-                <Typography>Название: {book.name}</Typography>
-                <Typography component="span">Авторы: </Typography>
-                {book.authors.map((el, index) => (
-                  <Typography key="index">{el}</Typography>
-                ))}
-                <Button
-                  type="button"
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => this.setState({ editFlag: true })}
-                >
-                  Изменить
-                </Button>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => downloadFile(book.libraryId)}
-                >
-                  Скачать
-                </Button>
-              </Grid>
-            </DialogContent>
-          </Dialog>
+          {book.libraryId && (
+            <Dialog
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              className={classes.modal}
+              open={openInfo}
+              onClose={() => setOpenInfo(false)}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <DialogContent>
+                <Grid>
+                  <Typography>Название: {book.name}</Typography>
+                  <Typography component="span">Авторы: </Typography>
+                  {book.authors.map((el, index) => (
+                    <Typography key="index">{el}</Typography>
+                  ))}
+                  <Button
+                    type="button"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => this.setState({ editFlag: true })}
+                  >
+                    Изменить
+                  </Button>
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => downloadFile(book.libraryId)}
+                  >
+                    Скачать
+                  </Button>
+                </Grid>
+              </DialogContent>
+            </Dialog>
+          )}
 
           <>{list}</>
         </div>
