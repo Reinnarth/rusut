@@ -92,7 +92,7 @@ class StgForm extends Component {
     if (specialty) {
       ceiling = classifiers.specialty.find(
         (el) => el.nameSpecialty === specialty
-      ).amount;
+      ).count;
 
       for (let i = 1; i <= ceiling; i++) {
         semesterNumbers.push(i);

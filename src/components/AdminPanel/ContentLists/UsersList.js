@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UsersList(props) {
   const classes = useStyles();
-  const history = useHistory();
+  const tab = useSelector((state) => state.adminReducer.tab);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.adminReducer.content);
   return (
@@ -69,10 +68,7 @@ export default function UsersList(props) {
                       onClick={() => {
                         if (window.confirm("Вы уверены?")) {
                           dispatch(
-                            deleteOneContent(
-                              user.userId,
-                              history.location.pathname
-                            )
+                            deleteOneContent(user.userId, `/admin/${tab}`)
                           );
                         }
                       }}

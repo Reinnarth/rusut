@@ -73,6 +73,7 @@ export const updateContent = (path, data) => (dispatch) => {
 };
 
 export const deleteOneContent = (id, path) => (dispatch) => {
+  console.log(path)
   dispatch(setLoading(true));
   API.axios
     .delete(`${path}/${id}`)

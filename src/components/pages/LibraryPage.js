@@ -221,14 +221,21 @@ function LibraryPage(props) {
                   {book.authors.map((el, index) => (
                     <Typography key="index">{el}</Typography>
                   ))}
-                  <Button
-                    type="button"
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => this.setState({ editFlag: true })}
-                  >
-                    Изменить
-                  </Button>
+                  <Can
+                    role={user.nameRole}
+                    perform="library:add"
+                    yes={(props) => (
+                      <Button
+                        type="button"
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => this.setState({ editFlag: true })}
+                      >
+                        Изменить
+                      </Button>
+                    )}
+                    no={() => <></>}
+                  />
                   <Button
                     color="primary"
                     variant="outlined"

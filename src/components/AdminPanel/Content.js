@@ -93,6 +93,11 @@ function Content(props) {
     }
   };
 
+  const handleSearchForm = (e) => {
+    e.preventDefault();
+    props.getContentArray(`admin/${tab}`, params);
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -110,23 +115,44 @@ function Content(props) {
         elevation={1}
       >
         <Toolbar>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <SearchIcon className={classes.block} color="inherit" />
+          <form onSubmit={handleSearchForm}>
+            <Grid container direction="row">
+              <Grid item>
+                <SearchIcon className={classes.block} color="inherit" />
+              </Grid>
+
+              <Grid item xs>
+                <TextField
+                  fullWidth
+                  placeholder="Поиск"
+                  onChange={handleChange}
+                  InputProps={{
+                    name: "search",
+                    disableUnderline: true,
+                    className: classes.searchInput,
+                  }}
+                />
+              </Grid>
+              <Grid item>
+                <Tooltip title="Найти">
+                  <IconButton type="submit">
+                    <SearchIcon className={classes.block} color="inherit" />
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Обновить">
+                  <IconButton
+                    onClick={() => {
+                      props.getContentArray(`admin/${tab}`, { offset: 0 });
+                    }}
+                  >
+                    <RefreshIcon className={classes.block} color="inherit" />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
             </Grid>
-            <Grid item xs>
-              <TextField
-                fullWidth
-                placeholder="Поиск"
-                onChange={handleChange}
-                InputProps={{
-                  name: "search",
-                  disableUnderline: true,
-                  className: classes.searchInput,
-                }}
-              />
-            </Grid>
-            {(tab === "library") | (tab === "place_practice") && (
+
+            {tab === "place_practice" && (
               <Grid item xs>
                 <Button
                   color="primary"
@@ -137,6 +163,7 @@ function Content(props) {
                 </Button>
               </Grid>
             )}
+
             {tab === "teachers" && (
               <Grid item xs>
                 <NativeSelect
@@ -151,11 +178,12 @@ function Content(props) {
                       {el}
                     </option>
                   ))}
-                </NativeSelect>
+                </NativeSelect>{" "}
               </Grid>
             )}
-            <Grid item>
-              {tab === "students" && (
+
+            {tab === "students" && (
+              <Grid item xs>
                 <NativeSelect
                   value={params.specialty}
                   onChange={handleChange}
@@ -170,27 +198,9 @@ function Content(props) {
                     </option>
                   ))}
                 </NativeSelect>
-              )}
-              <Tooltip title="Найти">
-                <IconButton
-                  onClick={() => {
-                    props.getContentArray(`admin/${tab}`, params);
-                  }}
-                >
-                  <SearchIcon className={classes.block} color="inherit" />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Обновить">
-                <IconButton
-                  onClick={() => {
-                    props.getContentArray(`admin/${tab}`, { offset: 0 });
-                  }}
-                >
-                  <RefreshIcon className={classes.block} color="inherit" />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
+              </Grid>
+            )}
+          </form>
         </Toolbar>
       </AppBar>
       <div className={classes.contentWrapper}>

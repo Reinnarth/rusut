@@ -41,8 +41,8 @@ export const menuTabs = [
     path: "/admin/learning-activities",
     tabs: [
       {
-        label: "Статьи",
-        name: "articles",
+        label: "Учебная деятельность",
+        name: "learning-activities",
       },
     ],
   },
