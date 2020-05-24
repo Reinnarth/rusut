@@ -164,24 +164,6 @@ function Content(props) {
               </Grid>
             )}
 
-            {tab === "teachers" && (
-              <Grid item xs>
-                <NativeSelect
-                  value={params.position}
-                  onChange={handleChange}
-                  inputProps={{
-                    name: "namePosition",
-                  }}
-                >
-                  {classifiers.positions.map((el, index) => (
-                    <option key={index} value={el}>
-                      {el}
-                    </option>
-                  ))}
-                </NativeSelect>{" "}
-              </Grid>
-            )}
-
             {tab === "students" && (
               <Grid item xs>
                 <NativeSelect
