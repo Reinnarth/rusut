@@ -179,7 +179,7 @@ function MenuAppBar(props) {
                 window.history.go("/signin");
               }}
             >
-              Logout
+              Выйти
             </MenuItem>
           </div>
           <div className={classes.sectionMobile}>
