@@ -138,7 +138,21 @@ export default class App extends Component {
                 ));
               }}
               no={() => (
-                <Route path="/" render={() => <Redirect to={route.wait} />} />
+                <Route
+                  path="/"
+                  render={() => (
+                    <>
+                      <Redirect to={route.wait} />
+                      {this.routes.map((route, index) => (
+                        <Route
+                          path={route.path}
+                          key={index}
+                          children={<route.page />}
+                        />
+                      ))}
+                    </>
+                  )}
+                />
               )}
             />
             {this.routes.map((route, index) => (
