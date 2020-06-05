@@ -144,7 +144,11 @@ export default class SinglePracticePlace extends Component {
             color="secondary"
             onClick={() => {
               if (window.confirm("Вы уверены?")) {
-                deleteOneContent(newPlace.placePracticeId, `${location.path}`);
+                deleteOneContent(
+                  newPlace.placePracticeId,
+                  `${location.path}`,
+                  `${location.path}`
+                );
               }
             }}
           >

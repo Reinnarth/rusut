@@ -62,6 +62,7 @@ export default function InternshipList(props) {
                           dispatch(
                             deleteOneContent(
                               internship.id,
+                              history.location.pathname,
                               history.location.pathname
                             )
                           );

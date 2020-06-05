@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
   getContentArray: (path, params) => dispatch(getContentArray(path, params)),
   getClassifiers: () => dispatch(getClassifiers()),
   updateContent: (path, data) => dispatch(updateContent(path, data)),
-  deleteOneContent: (id, path) => dispatch(deleteOneContent(id, path)),
+  deleteOneContent: (id, path, callbackPath) => dispatch(deleteOneContent(id, path, callbackPath)),
   downloadFile: (id) => dispatch(downloadFile(id)),
 });
 

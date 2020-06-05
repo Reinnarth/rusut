@@ -68,7 +68,11 @@ export default function UsersList(props) {
                       onClick={() => {
                         if (window.confirm("Вы уверены?")) {
                           dispatch(
-                            deleteOneContent(user.userId, `/admin/${tab}`)
+                            deleteOneContent(
+                              user.userId,
+                              `/admin/users`,
+                              `/admin/${tab}`
+                            )
                           );
                         }
                       }}

@@ -99,7 +99,7 @@ export default class SingleUser extends Component {
   render() {
     const { newUser, editFlag, classifiers } = this.state;
     const { deleteOneContent, location, user } = this.props;
-    console.log(newUser);
+    console.log(location);
     if (editFlag) {
       return (
         <form onSubmit={this.handleSubmit}>

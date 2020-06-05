@@ -72,7 +72,7 @@ export const updateContent = (path, data) => (dispatch) => {
     .catch((error) => dispatch(setError(true)));
 };
 
-export const deleteOneContent = (id, path) => (dispatch) => {
+export const deleteOneContent = (id, path, callbackPath) => (dispatch) => {
   console.log(path)
   dispatch(setLoading(true));
   API.axios
@@ -83,7 +83,7 @@ export const deleteOneContent = (id, path) => (dispatch) => {
         payload: response.data,
       });
     })
-    .then(() => dispatch(getContentArray(path, { offset: 0 })))
+    .then(() => dispatch(getContentArray(callbackPath, { offset: 0 })))
     .then(() => dispatch(setLoading(false)))
     .catch((error) => dispatch(setError(true)));
 };

@@ -63,6 +63,7 @@ export default function PracticePlaces(props) {
                           dispatch(
                             deleteOneContent(
                               place.placePracticeId,
+                              history.location.pathname,
                               history.location.pathname
                             )
                           );

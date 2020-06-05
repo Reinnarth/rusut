@@ -71,6 +71,7 @@ export default function BooksList(props) {
                           dispatch(
                             deleteOneContent(
                               book.libraryId,
+                              history.location.pathname,
                               history.location.pathname
                             )
                           );
