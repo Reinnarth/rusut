@@ -60,6 +60,7 @@ export default function ActivitiesList(props) {
                           dispatch(
                             deleteOneContent(
                               activity.id,
+                              history.location.pathname,
                               history.location.pathname
                             )
                           );
