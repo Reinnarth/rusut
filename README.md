@@ -1,4 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Crude version of university exams management system
+Demo available here: https://erpdemoapp.herokuapp.com/
 
 ## Available Scripts
 
